@@ -15,7 +15,7 @@ export const store = async( req , res)=>{
                 staffId : newstaff.staffId,
                 password : newstaff.password,
             });
-        }
+        };
     }
     catch(error){
         console.log("Error in the staff store controller :",error);
