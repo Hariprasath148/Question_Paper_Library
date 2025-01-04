@@ -4,4 +4,4 @@ export const Root_Layout = () => {
   return (
     <Outlet/>
   )
-}
+};
