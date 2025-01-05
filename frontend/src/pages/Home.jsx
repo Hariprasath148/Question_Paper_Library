@@ -1,20 +1,17 @@
 import React from 'react'
 import "../style/index.css"
-import background from "../images/background.jpeg"
+import background from "../assets/images/home/background.jpeg"
 import {NavLink} from "react-router-dom"
-import image from "../images/gnc-logo.png"
-export const Home = () => {
-    
+import image from "../assets/images/home/gnc-logo.png"
+export const Home = () => {   
     const Background={
         backgroundImage:`url(${background})`,
         backgroundSize:"cover",
         backgroundPosition:"center",
         height: '80vh'
-    }
-
-
-  return (
-      <>
+    }           
+    return (
+    <>
         <header>
             <div className="container-fluid px-3 py-2">
                 <div className="row align-items-center">
@@ -38,7 +35,6 @@ export const Home = () => {
                 </div>
             </div>
         </header>
-
         <div style={Background} className='d-flex align-items-center justify-content-center'>
             <div className="Gnc_gen p-5 d-flex flex-column align-items-center justify-content-center">
                 <h2 className='Gnc_Head text-center'>GNC Question Papers</h2>
@@ -46,6 +42,6 @@ export const Home = () => {
                 <NavLink to="/" className="Library_button text-center d-flex align-items-center justify-content-center">Get Into Library</NavLink>
             </div>
         </div>
-      </>
+    </>
   )
 };
