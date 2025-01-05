@@ -17,4 +17,6 @@
     --72: hsla(200, 7%, 72%, 1);
     --82: hsla(200, 7%, 82%, 1);
     --92: hsla(200, 7%, 92%, 1);
+    /* fonts */
+    --main-font : 'Roboto', sans-serif ;
 }
