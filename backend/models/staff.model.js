@@ -22,7 +22,7 @@ const StaffSchema = mongoose.Schema({
     email : {
         type : String ,
         unique : true,
-        default : ""
+        sparse: true
     },
     department : {
         type : String,
