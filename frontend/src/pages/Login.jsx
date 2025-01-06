@@ -7,8 +7,8 @@ import gnc_banner from "../assets/images/login/main-backdrop.png"
 export const Login = () => {
   return (
     <>
-      <div className="login-main-container w-100 vh-100 d-flex align-items-center">
-        <div className="login-form-container d-flex justify-content-center align-items-start flex-column vh-100 p-4 w-25">
+      <div className="login-main-container w-100 vh-100 row m-0">
+        <div className="login-form-container d-flex justify-content-center align-items-start flex-column vh-100 p-4 col-12 col-sm-5 col-lg-3">
           <div className='d-flex justify-content-center align-items-center w-100'>
             <img id='clg-logo' src={gnc_logo} alt="" />
           </div>
@@ -29,7 +29,7 @@ export const Login = () => {
             </div>
           </form>
         </div>
-        <div className='login-banner w-75 h-100'>
+        <div className='login-banner vh-100 col-9 col-sm-7 col-lg-9 p-0'>
           <img id='' className='w-100 h-100'  src={gnc_banner} alt="" />
         </div>
       </div>
