@@ -4,15 +4,12 @@ import background from "../images/background.jpeg"
 import {NavLink} from "react-router-dom"
 import image from "../images/gnc-logo.png"
 export const Home = () => {
-    
     const Background={
         backgroundImage:`url(${background})`,
         backgroundSize:"cover",
         backgroundPosition:"center",
         height: '80vh'
     }
-
-
   return (
       <>
         <header>
@@ -27,7 +24,7 @@ export const Home = () => {
                         />
                         <div>
                             <h1 className="h2 mb-0">Guru Nanak College</h1>
-                            <h3 className="h5 mb-0">(Autonomous), Chennai</h3>
+                            <h1 className="h4 mb-0">(Autonomous), Chennai</h1>                           
                         </div>
                     </div>
                     <div className="col-12 col-md-4 text-md-end text-center">
