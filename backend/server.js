@@ -1,9 +1,9 @@
 import express from "express"
 import dotenv from "dotenv"
 import authRoute from "./routes/auth.route.js"
-import staffroute from "./routes/staff.route.js"
 import connectDB from "./database/connectDB.js"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 
 dotenv.config();
 
@@ -17,8 +17,8 @@ app.use(cors({
 app.use(express.urlencoded({
     extended : true
 }))
+app.use(cookieParser())
 app.use("/api/auth",authRoute);
-app.use("/api/staff",staffroute); 
 
 
 app.listen(PORT , ()=>{
