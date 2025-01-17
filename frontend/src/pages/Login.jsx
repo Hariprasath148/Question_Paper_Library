@@ -31,7 +31,7 @@ export const Login = () => {
         const data = await res.json();
   
         if(!res.ok){
-          throw new Error(data.error);
+          throw new Error(data.error || "Something went wrong");
         }
       } catch (error) {
         throw error;
@@ -73,8 +73,8 @@ export const Login = () => {
               <input type="password" className="form-control" id="staffpassword"  name='password' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="current-password"/>
             </div>
             {isError && <div className='error-text mb-3 form-text text-decoration-underline text-danger'>{error.message}</div>}
-            <div className='form-group'>
-              <button type='submit' id='login-btn' className='btn text-center'>{isPending ? "loading" : "Login"}</button>
+            <div className='form-group mt-3'>
+              <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "loading" : "Login"}</button>
             </div>
           </form>
         </div>

@@ -1,6 +1,6 @@
 @import url(./root.css);
 
-#staff-card {
+.staff-container {
     box-shadow: var(--main-shadow);
     font-family: var(--staff-font);
 }
