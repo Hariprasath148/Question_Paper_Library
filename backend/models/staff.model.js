@@ -10,19 +10,15 @@ const StaffSchema = mongoose.Schema({
         required : true,
         unique : true
     },
+    email : {
+        type : String ,
+        unique : true,
+        required : true
+    },
     password : {
         type : String,
         default : "staff123",
         minLength : 6
-    },
-    profileImg : {
-        type : String,
-        default : ""
-    },
-    email : {
-        type : String ,
-        unique : true,
-        sparse: true
     },
     department : {
         type : String,

@@ -1,0 +1,37 @@
+@import url(./root.css);
+
+.staff-container {
+    box-shadow: var(--main-shadow);
+    font-family: var(--staff-font);
+}
+
+.side-line {
+    width: 5px;
+    background-color: var(--base4);
+}
+
+#btn-logout {
+    background-color: #F32121;
+    border : 1px solid #F32121;
+    color: white;
+}
+
+#btn-theme {
+    background-color: transparent;
+    border : 1px solid #F32121;
+}
+
+.info-box {
+    background-color: var(--86);
+    font-size: 12px;
+}
+
+#collapse-btn {
+    color: var(--8);
+}
+
+@media (max-width : 320px) {
+    #staff-label {
+        font-size: 14px;
+    }
+}

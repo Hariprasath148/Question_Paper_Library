@@ -3,38 +3,45 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../style/login.css"
 import gnc_logo from "../assets/images/login/gnc.png"
 import gnc_banner from "../assets/images/login/main-backdrop.png"
-import { useMutation , QueryClient} from '@tanstack/react-query';
-
+import { useMutation , QueryClient, useQueryClient} from '@tanstack/react-query';
+import baseURL from "../constant/constant.js"
+import { toast } from 'react-hot-toast';
+ 
 export const Login = () => {
 
   const [formData , setFormData] = useState({
-    staffId : "",
+    eamil : "",
     password : ""
   });
 
+  const queryClient = useQueryClient();
+
   const {mutate : login , isPending , isError , error } = useMutation({
-    mutationFn : async ({staffId , password})=>{
+    mutationFn : async ({email , password})=>{
       try {
-        const res = await fetch("http://localhost:5500/api/auth/login",{
+        const res = await fetch(`${baseURL}/api/auth/login`,{
           method : "POST",
           credentials : "include",
           headers : {
             "Content-Type" : "application/json"
           },
-          body : JSON.stringify({staffId , password})
+          body : JSON.stringify({email , password})
         })
   
         const data = await res.json();
   
         if(!res.ok){
-          throw new Error(data.error);
+          throw new Error(data.error || "Something went wrong");
         }
       } catch (error) {
         throw error;
       }
     },
     onSuccess : ()=>{
-      console.log("login succesful")
+      toast.success('Login Successfully')
+      queryClient.invalidateQueries({
+        queryKey : ["authStaff"]
+      });
     }
   })
 
@@ -57,8 +64,8 @@ export const Login = () => {
           <div className="header h2 mb-4 text-center">Log in to your account</div>
           <form action="" className='w-100' onSubmit={handlelogin}>
             <div className="mb-3 form-group">
-              <label htmlFor="staffID" className='mb-2'>Enter your staffID :</label>
-              <input type="text" className="form-control mb-2" id="staffId" name='staffId' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="username"/>
+              <label htmlFor="email" className='mb-2'>Enter your email :</label>
+              <input type="text" className="form-control mb-2" id="email" name='email' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="username"/>
               <div id='staffhelp' className='form-text'>Example : 234231235412</div>
             </div>
             <div className="mb-2 form-group">
@@ -66,8 +73,8 @@ export const Login = () => {
               <input type="password" className="form-control" id="staffpassword"  name='password' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="current-password"/>
             </div>
             {isError && <div className='error-text mb-3 form-text text-decoration-underline text-danger'>{error.message}</div>}
-            <div className='form-group'>
-              <button type='submit' id='login-btn' className='btn text-center w-25'>{isPending ? "loading" : "Login"}</button>
+            <div className='form-group mt-3'>
+              <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "loading" : "Login"}</button>
             </div>
           </form>
         </div>
