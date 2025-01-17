@@ -9,6 +9,15 @@ import { toast } from 'react-hot-toast';
 
 export const Admin_Table = ({Staff}) => {
 
+  const [newFormData , setNewFormData] = useState({
+      staffname : "",
+      staffId : "",
+      email : "",
+      password : "",
+      department : "",
+      role : "Staff"
+    });
+
   const queryClient = useQueryClient();  
   const [ removingEmail , setRemovingEmail ] = useState(null);
 
@@ -37,7 +46,7 @@ export const Admin_Table = ({Staff}) => {
     retry : false
   });
 
-  const { mutate : removeStaff , isPending : removeIsPending , isError : removeisError , error : removeError } = useMutation({
+  const { mutate : removeStaff  , isError : removeisError , error : removeError } = useMutation({
     mutationFn : async(email) => {
       try {
         const res = await fetch(`${baseURL}/api/staff/remove-staff`,{
@@ -72,10 +81,60 @@ export const Admin_Table = ({Staff}) => {
     },
   });
 
+  const { mutate : addNewStaff , isPending : newStaffIsPending , isError : newStaffIsError , error : newStaffError } = useMutation({
+    mutationFn : async({staffname , staffId , email , password , department , role}) => {
+      try {
+        const res = await fetch(`${baseURL}/api/auth/add-user`,{
+          method : "POST",
+          credentials : "include", 
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify({ staffname , staffId , email , password , department , role })
+        });
+
+        const data = await res.json();
+
+        if(!res.ok){
+          throw new Error( data.error || "Something Wne Wrong");
+        }
+        return data;
+      } catch (error) {
+        throw error;
+      }
+    },
+    onSuccess : () => {
+      toast.success('Added Successfully!');
+      queryClient.invalidateQueries(["getAllStaff"]);
+      setNewFormData({
+        staffname : "",
+        staffId : "",
+        email : "",
+        password : "",
+        department : "",
+        role : "Staff"
+      });
+      document.querySelector("#newStaffForm").reset();
+    },onError: (error) => {
+      toast.error("Unable to Add the record");
+      console.error("Error deleting staff:", error);
+    },
+  })
+
   function removeRecord(e){
     const removeEmail =e.target.getAttribute("data-staffemail");
     setRemovingEmail(removeEmail);
     removeStaff(removeEmail);
+  }
+
+  function handlenewFormInput(e) {
+    setNewFormData({...newFormData,[e.target.name]:e.target.value});
+  }
+
+  function handleSave(e){
+    e.preventDefault();
+    addNewStaff(newFormData);
+    console.log(newFormData);
   }
 
   return (
@@ -108,7 +167,7 @@ export const Admin_Table = ({Staff}) => {
                   <td colSpan="7" className="text-center full-text-table">{removeError.message}</td>
                   </tr>}
                 <tr>
-                  <td colSpan="7" className="text-center full-text-table fs-5">Your's Detail</td>
+                  <td colSpan="7" className="text-center full-text-table h5">Your's Detail</td>
                 </tr>
                 <tr>
                   <td className="text-nowrap">1</td>
@@ -120,7 +179,7 @@ export const Admin_Table = ({Staff}) => {
                   <td className="text-nowrap text-center text-success">Current</td>
                 </tr>
                 <tr>
-                  <td colSpan="7" className="text-center full-text-table fs-5">Other's Detail</td>
+                  <td colSpan="7" className="text-center full-text-table h5">Other's Detail</td>
                 </tr>
                 {  allStaffLoading ? (
                   <tr>
@@ -164,6 +223,55 @@ export const Admin_Table = ({Staff}) => {
               <div className="vr h-100 side-line rounded opacity-100"></div>
               <div id="table-label" className="card-header bg-transparent h5 border-0 fw-normal text-wrap ps-2 p-0">Add new Staff or Admin</div>
             </div>
+          </div>
+        </div>
+        <div className="card-body p-3">
+          <div className="conatiner-fluid">
+            <form action="#" onSubmit={handleSave} id="newStaffForm" >
+              <div className="form-group mt-3">
+                <label htmlFor="newStaffName">Enter the Staff Name</label>
+                <input type="text" className="form-control mt-2" id="newStaffName" name="staffname" aria-describedby="helpStaffName" onChange={handlenewFormInput} autoComplete="off" required/>
+                <small id="helpStaffName" className=" form-text text-muted d-block mt-2 ">Enter the Staff Name</small>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="newStaffId">Enter the StaffId</label>
+                <input type="text" className="form-control mt-2" id="newStaffId" name="staffId" aria-describedby="helpStaffId" onChange={handlenewFormInput} autoComplete="off" required/>
+                <small id="helpStaffId" className=" form-text text-muted d-block mt-2 ">Enter the Unique StaffId</small>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="newStaffEmail">Enter the Staff Email address</label>
+                <input type="email" className="form-control mt-2" id="newStaffEmail"  name="email" aria-describedby="helpStaffEmail" onChange={handlenewFormInput} autoComplete="off" required/>
+                <small id="helpStaffEmail" className=" form-text text-muted d-block mt-2 ">Enter the valid email address to send Invitation</small>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="newStaffPassword">Enter the Password</label>
+                <input type="text" className="form-control mt-2" id="newStaffPassword"  name="password" aria-describedby="helpStaffPassword" value="staff123" onChange={handlenewFormInput} autoComplete="off" required/>
+                <small id="helpStaffPassword" className=" form-text text-muted d-block mt-2 ">Defalut password Staff123</small>
+              </div>
+              <div className="form-group mt-3">
+                <label htmlFor="newStaffDepartment">Enter the Deparment</label>
+                <input type="text" className="form-control mt-2" id="newStaffDepartment" name="department" aria-describedby="helpStaffDepartment" onChange={handlenewFormInput} autoComplete="off" required/>
+                <small id="helpStaffDepartment" className=" form-text text-muted d-block mt-2 ">Enter the Department</small>
+              </div>
+              <div className="form-group mt-3">
+                <label>Enter the Role</label>
+                <div className="d-flex gap-5 mt-2">
+                  <div className="form-group">
+                    <input className="form-check-input" type="radio" name="role" id="newstaffRoleStaff" value="Staff" checked={newFormData.role==="Staff"} onChange={handlenewFormInput}/>
+                    <label className="ps-2 form-check-label" htmlFor="newstaffRoleStaff">Staff</label>
+                  </div>
+                  <div className="form-group">
+                    <input className="form-check-input" type="radio" name="role" id="newstaffRoleAdmin" value="Admin" onChange={handlenewFormInput} checked={newFormData.role==="Admin"}/>
+                    <label className="ps-2 form-check-label" htmlFor="newstaffRoleAdmin">Admin</label>
+                  </div>
+                </div>
+                <small id="" className="form-text text-muted d-block mt-2">Enter the valid email address to send Invitation</small>
+              </div>
+              {newStaffIsError && <div className='error-text mb-3 form-text text-decoration-underline text-danger mt-3'>{newStaffError.message}</div>}
+              <div className="form-group mt-3">
+                  <button type='submit' id='save-btn' className='btn text-center px-3'>{newStaffIsPending ? "Saving..." : "Save"}</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
