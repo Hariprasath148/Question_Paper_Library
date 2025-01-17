@@ -7,7 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Staff_layout } from './layout/Staff_layout';
 import { Login } from './pages/Login';
 import { Library_Layout } from './layout/Library_Layout';
+import { QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter (
   createRoutesFromElements (
@@ -22,6 +25,8 @@ const router = createBrowserRouter (
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
   </StrictMode>,
 )
