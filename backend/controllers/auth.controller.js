@@ -18,7 +18,7 @@ export const add_user = async (req, res) => {
         const staffIdCheck = await Staff.findOne({staffId});
         if(staffIdCheck){
             console.log("StaffId already exits.")
-            return res.status(400).json({error : "Staff is Already exists"});
+            return res.status(400).json({error : "StaffId is Already exists"});
         }
         
         if(password.lenght < 6){
