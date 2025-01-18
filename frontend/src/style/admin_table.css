@@ -1,9 +1,5 @@
 @import url("./root.css");
 
-a {
-    background-color: transparent !important;
-    color: inherit !important;
-}
 
 th {
     background-color: #F32121 !important;
@@ -17,6 +13,11 @@ td {
 
 #save-btn {
     background-color: var(--base4);
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd;
 }
 
 form input,label {
