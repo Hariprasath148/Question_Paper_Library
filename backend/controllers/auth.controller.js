@@ -18,7 +18,7 @@ export const add_user = async (req, res) => {
         const staffIdCheck = await Staff.findOne({staffId});
         if(staffIdCheck){
             console.log("StaffId already exits.")
-            return res.status(400).json({error : "Staff is Already exists"});
+            return res.status(400).json({error : "StaffId is Already exists"});
         }
         
         if(password.lenght < 6){
@@ -87,10 +87,20 @@ export const getStaff = async(req , res) => {
             "staffId" : staff.staffId,
             "email" : staff.email,
             "department" : staff.department,
-            "role" : staff.role
+            "role" : staff.role,
+            "theme" : staff.theme
         });
     } catch (error) {
         console.log("Error in getStaff controller.");
+        res.status(500).json({error : "Internal Server Error"})
+    }
+}
+export const forgotPassword = async(req , res) => {
+    try {
+      console.log("Forgot Password controller called.");
+    }
+    catch (error) {
+        console.log("Error in logout controller.");
         res.status(500).json({error : "Internal Server Error"})
     }
 }

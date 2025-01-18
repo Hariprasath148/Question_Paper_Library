@@ -28,6 +28,10 @@ const StaffSchema = mongoose.Schema({
         type : String ,
         default : "staff",
     },
+    theme : {
+        type : String,
+        default : "light"
+    }
 },{timestamps : true});
 
 const Staff = mongoose.model("Staff",StaffSchema);

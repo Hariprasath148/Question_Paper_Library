@@ -42,7 +42,7 @@ export const Staff_layout = () => {
     }
 
     return (
-      <div id="Staff-layout" className="p-3 pt-5">
+      <div id="Staff-layout" className={`p-3 pt-5 ${Staff.theme}`}>
         <Staff_card Staff={Staff}/>
         {Staff.role == "Admin" && <Admin_Table Staff={Staff} />}
         <Staff_Library />

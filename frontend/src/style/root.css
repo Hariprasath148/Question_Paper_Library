@@ -31,3 +31,10 @@
     /* main shadows */
     --main-shadow : 0 0 10px hsla(200, 7%, 72%, 1);
  }
+
+#Staff-layout.dark {
+    background-color: black !important;
+    color: white !important;
+    --86 :  hsla(210, 7%, 22%, 1);
+    --32 : hsla(210, 7%, 62%, 1);
+}
