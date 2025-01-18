@@ -36,6 +36,42 @@ export const Staff_card = ({ Staff }) => {
       });
     }
   });
+
+  const { mutate  : changeThemeColor } = useMutation({
+    mutationFn : async ({email , theme})=>{
+      try {
+        console.log(email,theme)
+        const res = await fetch(`${baseURL}/api/staff/change-theme`,{
+          method : "POST",
+          credentials : "include",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify({email , theme})
+        });
+        const data = await res.json();
+        if(!res.ok){
+          throw new Error(data.error || "Something Went Wrong")
+        }
+      }
+      catch (error) {
+        throw error;
+      }
+    },
+    onSuccess : () =>{
+      toast.success("Theme Changed")
+      queryClient.invalidateQueries({
+        queryKey : ["authStaff"]
+      });
+      location.reload();
+    }
+  });
+
+  function changeTheme(e) {
+    const theme = e.target.getAttribute("data-value");
+    const chageEmail = Staff.email;
+    changeThemeColor({ email : chageEmail , theme});
+  }
   
   return (
     <>
@@ -50,8 +86,8 @@ export const Staff_card = ({ Staff }) => {
               <div className="dropdown">
                 <a className="btn dropdown-toggle" id="btn-theme" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Theme</a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Light</a></li>
-                  <li><a className="dropdown-item" href="#">Dark</a></li>
+                  <li><a className="dropdown-item" href="#" data-value="light" onClick={changeTheme}>Light</a></li>
+                  <li><a className="dropdown-item" href="#" data-value="dark" onClick={changeTheme}>Dark</a></li>
                 </ul>
               </div>
               <button id="btn-logout" type="button" className="btn btn-primary" onClick={(e)=>{ e.preventDefault(); logout(); }}>logout</button>
@@ -92,7 +128,7 @@ export const Staff_card = ({ Staff }) => {
               <button type="button" className="btn btn-link w-25" id="collapse-btn" data-bs-toggle="collapse" href="#Collapse-staff-Info" role="button" aria-expanded="false" aria-controls="Collapse-staff-Info">More</button>
             </div>
           </div>
-        </div>
+        </div>  
       </div>
     </>
   )

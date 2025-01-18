@@ -30,6 +30,22 @@
     color: var(--8);
 }
 
+.card {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+a {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+
+#collapse-btn {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
 @media (max-width : 320px) {
     #staff-label {
         font-size: 14px;

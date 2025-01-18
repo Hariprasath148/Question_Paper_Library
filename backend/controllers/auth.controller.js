@@ -87,7 +87,8 @@ export const getStaff = async(req , res) => {
             "staffId" : staff.staffId,
             "email" : staff.email,
             "department" : staff.department,
-            "role" : staff.role
+            "role" : staff.role,
+            "theme" : staff.theme
         });
     } catch (error) {
         console.log("Error in getStaff controller.");

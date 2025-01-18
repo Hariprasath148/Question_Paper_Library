@@ -1,5 +1,10 @@
 @import url("./root.css");
 
+a {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
 th {
     background-color: #F32121 !important;
     color : var(--92) !important;
@@ -8,14 +13,17 @@ th {
 
 td {
     border: none !important;
-    background-color: transparent !important;
 }
 
 #save-btn {
     background-color: var(--base4);
 }
 
-/* table {
-    border: 2px solid var(--72) !important;
-} */
- 
+form input,label {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+.form-text {
+    color : var(--32) !important;
+}

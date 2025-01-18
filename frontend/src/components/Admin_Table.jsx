@@ -13,7 +13,7 @@ export const Admin_Table = ({Staff}) => {
       staffname : "",
       staffId : "",
       email : "",
-      password : "",
+      password : "staff123",
       department : "",
       role : "Staff"
     });
@@ -110,7 +110,7 @@ export const Admin_Table = ({Staff}) => {
         staffname : "",
         staffId : "",
         email : "",
-        password : "",
+        password : "staff123",
         department : "",
         role : "Staff"
       });
@@ -150,7 +150,7 @@ export const Admin_Table = ({Staff}) => {
         </div>
         <div className="card-body p-3">
           <div className="table-responsive rounded-2 mt-4" style={{maxHeight : "300px"}} >
-            <table className="table table-striped m-0" >
+            <table className={`table table-striped m-0 ${ Staff.theme === "dark" ? "table-dark" : "" }`} >
               <thead>
                 <tr>
                   <th scope="col">S.no</th>
