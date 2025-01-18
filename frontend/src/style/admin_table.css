@@ -19,14 +19,6 @@ td {
     background-color: var(--base4);
 }
 
-<<<<<<< HEAD
-/* table {
-    border: 2px solid var(--72) !important;
-} */
- .activeSubject{
-    
- }
-=======
 form input,label {
     background-color: transparent !important;
     color: inherit !important;
@@ -35,4 +27,3 @@ form input,label {
 .form-text {
     color : var(--32) !important;
 }
->>>>>>> 4011058d699c89435038173ce67aa41d8f5d4bf3
