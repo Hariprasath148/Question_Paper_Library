@@ -1,0 +1,25 @@
+@import url("./root.css");
+  .Custom_Button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 0px 15px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+  .Custom_Button:hover {
+    background-color: #F32121;
+    color: white;
+  }
+  .activeSubject {
+    background-color: #F32121; 
+    color:white;
+    border-color: #F32121; 
+  }
+  .card-body{
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .card-body::-webkit-scrollbar{
+    display: none;
+  }
