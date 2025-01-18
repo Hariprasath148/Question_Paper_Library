@@ -1,58 +1,86 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../style/login.css"
-import gnc_logo from "../assets/images/login/gnc.png"
-import gnc_banner from "../assets/images/login/main-backdrop.png"
-import { useMutation , QueryClient, useQueryClient} from '@tanstack/react-query';
-import baseURL from "../constant/constant.js"
+import "../style/login.css";
+import gnc_logo from "../assets/images/login/gnc.png";
+import gnc_banner from "../assets/images/login/main-backdrop.png";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import baseURL from "../constant/constant.js";
 import { toast } from 'react-hot-toast';
- 
+
 export const Login = () => {
 
-  const [formData , setFormData] = useState({
-    eamil : "",
-    password : ""
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
   });
 
   const queryClient = useQueryClient();
 
-  const {mutate : login , isPending , isError , error } = useMutation({
-    mutationFn : async ({email , password})=>{
-      try {
-        const res = await fetch(`${baseURL}/api/auth/login`,{
-          method : "POST",
-          credentials : "include",
-          headers : {
-            "Content-Type" : "application/json"
-          },
-          body : JSON.stringify({email , password})
-        })
-  
-        const data = await res.json();
-  
-        if(!res.ok){
-          throw new Error(data.error || "Something went wrong");
-        }
-      } catch (error) {
-        throw error;
+  const { mutate: login, isPending, isError, error } = useMutation({
+    mutationFn: async ({ email, password }) => {
+      const res = await fetch(`${baseURL}/api/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
       }
     },
-    onSuccess : ()=>{
-      toast.success('Login Successfully')
+    onSuccess: () => {
+      toast.success('Login Successfully');
       queryClient.invalidateQueries({
-        queryKey : ["authStaff"]
+        queryKey: ["authStaff"]
       });
     }
-  })
+  });
 
-  function handlelogin(event){  
+  const { mutate: sendResetEmail } = useMutation({
+    mutationFn: async (email) => {
+      const res = await fetch(`${baseURL}/api/auth/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+    },
+    onSuccess: () => {
+      toast.success('Password reset email sent!');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    }
+  });
+
+  function handleLogin(event) {
     event.preventDefault();
     login(formData);
   }
 
-  const handleInputChange = (e) =>{
-    setFormData({...formData,[e.target.name]:e.target.value});
+  function handleForgotPassword() {
+    if (!formData.email) {
+      toast.error('Please enter your email first');
+      return;
+    }
+
+    // Debugging line to check if function is getting called
+    console.log("Sending password reset email for:", formData.email);
+
+    sendResetEmail(formData.email);
   }
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
@@ -62,26 +90,35 @@ export const Login = () => {
             <img id='clg-logo' src={gnc_logo} alt="" />
           </div>
           <div className="header h2 mb-4 text-center">Log in to your account</div>
-          <form action="" className='w-100' onSubmit={handlelogin}>
+          <form className='w-100' onSubmit={handleLogin}>
             <div className="mb-3 form-group">
-              <label htmlFor="email" className='mb-2'>Enter your email :</label>
-              <input type="text" className="form-control mb-2" id="email" name='email' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="username"/>
-              <div id='staffhelp' className='form-text'>Example : 234231235412</div>
+              <label htmlFor="email" className='mb-2'>Enter your email:</label>
+              <input type="text" className="form-control mb-2" id="email" name='email' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="username" />
+              <div id='staffhelp' className='form-text'>Example: example@domain.com</div>
             </div>
             <div className="mb-2 form-group">
-              <label htmlFor="staffpassword" className='mb-2'>Enter your password :</label>
-              <input type="password" className="form-control" id="staffpassword"  name='password' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="current-password"/>
+              <label htmlFor="staffpassword" className='mb-2'>Enter your password:</label>
+              <input type="password" className="form-control" id="staffpassword" name='password' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="current-password" />
             </div>
             {isError && <div className='error-text mb-3 form-text text-decoration-underline text-danger'>{error.message}</div>}
             <div className='form-group mt-3'>
-              <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "loading" : "Login"}</button>
+              <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "Loading" : "Login"}</button>
             </div>
           </form>
+          {/* Forgot Password Link */}
+          <div className='mt-3'>
+            <span
+              className='text-primary cursor-pointer'
+              onClick={handleForgotPassword}
+              style={{ textDecoration: 'underline' }}>
+              Forgot password?
+            </span>
+          </div>
         </div>
         <div className='login-banner vh-100 col-9 col-sm-7 col-lg-9 p-0'>
-          <img id='' className='w-100 h-100'  src={gnc_banner} alt="" />
+          <img className='w-100 h-100' src={gnc_banner} alt="" />
         </div>
       </div>
     </>
-  )
+  );
 };

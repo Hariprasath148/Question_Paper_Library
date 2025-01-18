@@ -1,6 +1,13 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../style/staffLibrary.css"
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 export const Staff_Library = () => {
+  const [activeSubject,SetactiveSubject]=useState("Python")
+  const subjects=["Python", "Java", "C", "Data Communication", "Software Engineering", "RDBMS","Cloud Computing","PHP","SQL"]
+  const HandleChangeActive=(subject)=>{
+    SetactiveSubject(subject);
+  }
   return (
     <>
     <div className="container-xxl rounded-4 overflow-hidden p-3 staff-container mt-5" id="staff-card">
@@ -12,7 +19,16 @@ export const Staff_Library = () => {
           </div>
         </div>
       </div>
-      <div className="card-body p-3"> 
+      <div className="card-body p-3 mt-3"> 
+        {subjects.map((subject,index)=>(
+          <button 
+          key={index} 
+          className={`Custom_Button my-2 ${subject===activeSubject?"activeSubject":""}`} 
+          onClick={()=>HandleChangeActive(subject)}
+          >
+            {subject}   
+          </button>
+        ))}
       </div>  
     </div>
   </>
