@@ -95,3 +95,12 @@ export const getStaff = async(req , res) => {
         res.status(500).json({error : "Internal Server Error"})
     }
 }
+export const forgotPassword = async(req , res) => {
+    try {
+      console.log("Forgot Password controller called.");
+    }
+    catch (error) {
+        console.log("Error in logout controller.");
+        res.status(500).json({error : "Internal Server Error"})
+    }
+}
