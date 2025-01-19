@@ -52,3 +52,23 @@ export const sendEmail = async ( staffname , email , password , staffId , depart
 };
 
 
+export const forgotPasswordEmail = async ( email  , resetUrl ) => {
+  try {
+    const mailOptions = {
+      from: "examshelf.team@gmail.com", 
+      to : email, 
+      subject : "Forgot passsword",
+      text : "", 
+      html : `${resetUrl}`
+    };
+    console.log(resetUrl);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.response);
+    return info;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
+};
+
+
