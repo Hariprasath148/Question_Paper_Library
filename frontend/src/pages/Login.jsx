@@ -100,7 +100,7 @@ export const Login = () => {
               <label htmlFor="staffpassword" className='mb-2'>Enter your password:</label>
               <input type="password" className="form-control" id="staffpassword" name='password' onChange={handleInputChange} aria-describedby="staffhelp" autoComplete="current-password" />
             </div>
-            {isError && <div className='error-text mb-3 form-text text-decoration-underline text-danger'>{error.message}</div>}
+            {isError && <div className='error-text mb-3 text-decoration-underline text-danger'>{error.message}</div>}
             <div className='form-group mt-3'>
               <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "Loading" : "Login"}</button>
             </div>

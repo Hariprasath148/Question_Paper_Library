@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Library_Layout } from './layout/Library_Layout';
 import baseURL from "./constant/constant.js"
 import { useQuery } from '@tanstack/react-query';
+import "./style/root.css"
 
 export const App = () => {
 
