@@ -8,6 +8,9 @@ import { Library_Layout } from './layout/Library_Layout';
 import baseURL from "./constant/constant.js"
 import { useQuery } from '@tanstack/react-query';
 import "./style/root.css"
+import { Staff_Root_Layout } from './layout/Staff_Root_Layout.jsx';
+import { New_Question_paper } from './pages/New_Question_paper.jsx';
+import { Error_Page } from './pages/Error_Page.jsx';
 
 export const App = () => {
 
@@ -48,9 +51,13 @@ export const App = () => {
         createRoutesFromElements (
           <Route path='/' element={<Root_Layout/>}>
             <Route index element={<Home/>}/>
-            <Route path="staff" element={authStaff ? <Staff_layout/> : <Navigate to="/login"/>}/>
+            <Route path="staff" element={authStaff ? <Staff_Root_Layout/> : <Navigate to="/login"/>}>
+              <Route index element={<Staff_layout />} />
+              <Route path="add-new-question-paper" element={<New_Question_paper/>} />
+            </Route>
             <Route path="login" element={!authStaff ? <Login/> : <Navigate to="/staff"/>}/>
             <Route path="library" element={<Library_Layout/>} />
+            <Route path="*" element={<Error_Page/>} />
           </Route>
         )
     );

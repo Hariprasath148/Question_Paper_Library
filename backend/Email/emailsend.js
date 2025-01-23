@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import nodemailer from 'nodemailer';
 
 
@@ -7,15 +10,15 @@ const transporter = nodemailer.createTransport({
   port: 587, // Port for TLS
   secure: false, // Use TLS
   auth: {
-    user: "examshelf.team@gmail.com",
-    pass: "fceyhdohtxwayisi",
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSCODE,
   },
 });
 
 export const sendEmail = async ( staffname , email , password , staffId , department , role) => {
   try {
     const mailOptions = {
-      from: "examshelf.team@gmail.com", 
+      from: process.env.EMAIL, 
       to : email, 
       subject : "Welcome Invitation",
       text : "", 
@@ -42,6 +45,37 @@ export const sendEmail = async ( staffname , email , password , staffId , depart
     </div>
   `};
 
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.response);
+    return info;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
+};
+
+export const removeEmail = async ( email , staffname) => {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL, 
+      to : email, 
+      subject : "Notice: Account Removal from ExaShelf",
+      text : "", 
+      html : `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; padding: 20px;">
+      <h2 style="text-align: center; color: #d9534f;">Account Removal Notice</h2>
+      <p>Hello,${staffname}</p>
+      <p>We regret to inform you that your account has been removed from <strong>ExaShelf</strong>. If you believe this action was taken in error or require further clarification, please reach out to your administrator for more details.</p>
+      <p style="margin-top: 20px;">Here are the next steps you can take:</p>
+      <ul>
+        <li>Contact your administrator for additional information.</li>
+        <li>If you have any urgent concerns, feel free to email our support team.</li>
+      </ul>
+      <p style="margin-top: 20px;">We apologize for any inconvenience caused.</p>
+      <p style="margin-top: 40px; text-align: center;">
+        Contact Administrator for more Details..
+      </p>
+    </div>
+  `};
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent:', info.response);
     return info;
