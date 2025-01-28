@@ -1,3 +1,4 @@
+import { removeEmail } from "../Email/emailsend.js";
 import Staff from "../models/staff.model.js"
 
 
@@ -24,13 +25,13 @@ export const removeStaff = async( req , res ) =>{
         if(!emailregx.test(email)){
             return res.status(400).json({error : "Invalid email Format"})
         }
-
+        const staff = await Staff.findOne({email});
         const result = await Staff.deleteOne({ email: email });
 
         if (result.deletedCount === 0) {
             return res.status(404).json({ error: "Staff member not found" });
         }
-
+        removeEmail(email , staff.staffname);
         res.status(200).json({ message: "Staff member deleted successfully" });
 
     } catch (error) {
