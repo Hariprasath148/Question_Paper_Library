@@ -7,7 +7,7 @@ import "../style/staff_card.css"
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export const Staff_card = ({ Staff }) => {
-  
+
   const queryClient = useQueryClient();
 
   const { mutate  : logout } = useMutation({
@@ -40,7 +40,6 @@ export const Staff_card = ({ Staff }) => {
   const { mutate  : changeThemeColor } = useMutation({
     mutationFn : async ({email , theme})=>{
       try {
-        console.log(email,theme)
         const res = await fetch(`${baseURL}/api/staff/change-theme`,{
           method : "POST",
           credentials : "include",
@@ -59,11 +58,11 @@ export const Staff_card = ({ Staff }) => {
       }
     },
     onSuccess : () =>{
-      toast.success("Theme Changed")
       queryClient.invalidateQueries({
         queryKey : ["authStaff"]
       });
       location.reload();
+      toast("Theme Changed")
     }
   });
 
@@ -86,8 +85,8 @@ export const Staff_card = ({ Staff }) => {
               <div className="dropdown">
                 <a className="btn dropdown-toggle" id="btn-theme" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Theme</a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#" data-value="light" onClick={changeTheme}>Light</a></li>
-                  <li><a className="dropdown-item" href="#" data-value="dark" onClick={changeTheme}>Dark</a></li>
+                  <li><button className="dropdown-item" data-value="light" onClick={changeTheme}>Light</button></li>
+                  <li><button className="dropdown-item" data-value="dark" onClick={changeTheme}>Dark</button></li>
                 </ul>
               </div>
               <button id="btn-logout" type="button" className="btn btn-primary" onClick={(e)=>{ e.preventDefault(); logout(); }}>logout</button>

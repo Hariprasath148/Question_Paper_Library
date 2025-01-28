@@ -24,7 +24,7 @@ export const Home = () => {
                         </div>
                     </div>
                     <div className="col-12 col-md-3 text-center text-md-end mb-0 mb-md-3 mb-sm-3 mt-0 mt-sm-3">
-                        <NavLink to="/login" className="Login_button">
+                        <NavLink to="/login" id="Login_button">
                             Teacher Login
                         </NavLink>
                     </div>

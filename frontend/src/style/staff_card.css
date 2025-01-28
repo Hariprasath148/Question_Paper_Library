@@ -1,4 +1,3 @@
-@import url(./root.css);
 
 .staff-container {
     box-shadow: var(--main-shadow);
@@ -35,7 +34,7 @@
     color: inherit !important;
 }
 
-a {
+#btn-theme {
     background-color: transparent !important;
     color: inherit !important;
 }
