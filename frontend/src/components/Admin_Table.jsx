@@ -195,12 +195,12 @@ export const Admin_Table = ({Staff}) => {
                  : (
                   (allStaff.allStaff.length == 0) ? (
                     <tr>
-                      <td colSpan="7" className="text-center text-body-secondary">No Staff Found</td>
+                      <td colSpan="7" className="text-center text-body-secondary" id="noStaffMessage">No Staff Found</td>
                     </tr>
                   ) : (
                     allStaff.allStaff.map((staff , index) => {
                       return (
-                        <tr>
+                        <tr key={index+1}>
                           <td className="text-nowrap">{index +1 }</td>
                           <td className="text-nowrap">{staff.staffname}</td>
                           <td className="text-nowrap">{staff.staffId}</td>
@@ -245,7 +245,7 @@ export const Admin_Table = ({Staff}) => {
               </div>
               <div className="form-group mt-3">
                 <label htmlFor="newStaffPassword">Enter the Password</label>
-                <input type="text" className="form-control mt-2" id="newStaffPassword"  name="password" aria-describedby="helpStaffPassword" value="staff123" onChange={handlenewFormInput} autoComplete="off" required/>
+                <input type="text" className="form-control mt-2" id="newStaffPassword"  name="password" aria-describedby="helpStaffPassword" value={newFormData.password} onChange={handlenewFormInput} autoComplete="off" required/>
                 <small id="helpStaffPassword" className=" form-text text-muted d-block mt-2 ">Defalut password Staff123</small>
               </div>
               <div className="form-group mt-3">

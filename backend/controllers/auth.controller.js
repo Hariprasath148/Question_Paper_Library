@@ -1,8 +1,11 @@
 import Staff from "../models/staff.model.js";
 import { forgotPasswordEmail, sendEmail } from "../Email/emailsend.js";
 import bcrypt from "bcryptjs";
+import dotenv from 'dotenv';
+import crypto from 'crypto'
 import generateToken from "../utils/generatetoken.js";
-import crypto from 'crypto'; 
+
+dotenv.config();
 
 export const add_user = async (req, res) => {
     try {
@@ -96,7 +99,8 @@ export const getStaff = async(req , res) => {
         res.status(500).json({error : "Internal Server Error"})
     }
 }
-export const forgotPassword = async(req , res) => {
+//Forget Password
+export const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
     
