@@ -11,10 +11,10 @@
   background-color: #F32121;
   color: white;
 }
-.activeSubject {
-  background-color: #F32121; 
-  color:white;
-  border-color: #F32121; 
+.Custom_Button.active {
+  background-color: #F32121;
+  color: white;
+  border: 2px solid #F32121;
 }
 .card-body{
   overflow-x: auto;

@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
 
 const questionPaperSchema = new mongoose.Schema({
+    Subject_ID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject", // Reference to Subject collection
+        required: true,
+    },
+    QuestionPaper_ID : {
+        type : String,
+        required : true,
+        unique : true
+    },
     year : {
         type : String,
         required : true,
@@ -16,7 +26,10 @@ const questionPaperSchema = new mongoose.Schema({
             type : [String],
         },
     },
-    previewLink : {
+    googleID : {
+        type : String,
+    },
+    preViewLink : {
         type : String,
     },
     downloadLink : {
