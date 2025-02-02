@@ -22,7 +22,6 @@ export const savePDF = async ( req , res ) => {
         if(!year==null || !markBreakdown == null) {
             return res.status(400).json({error : "year or Question not found"});
         }
-        const subject_Lenght = subject.QuestionPaper.length + 1;
         const subject_Name = subject.Subject_name;
         const filePath = req.file.path;
         const fileName =  generateUniqueQuestionID(subject_Name);
