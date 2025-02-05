@@ -11,18 +11,18 @@ const questionPaperSchema = new mongoose.Schema({
         required : true,
         unique : true
     },
-    year : {
+    topic : {
         type : String,
         required : true,
     },
     markBreakdown : {
-        "3_mark" : {
+        "mark_3" : {
             type : [String],
         },
-        "6_mark" : {
+        "mark_6" : {
             type : [String],
         },
-        "10_mark" : {
+        "mark_10" : {
             type : [String],
         },
     },

@@ -11,7 +11,7 @@ const generateUniqueQuestionID = (subjectName) => {
 
 export const savePDF = async ( req , res ) => {
     try {
-        const { year ,  markBreakdown , Subject_code } = req.body;
+        const { topic ,  markBreakdown , Subject_code } = req.body;
      
         const subject = await Subject.findOne({Subject_code});
 
@@ -19,8 +19,8 @@ export const savePDF = async ( req , res ) => {
             return res.status(400).json({error : "Invail Subject informatiom"});
         }
         
-        if(!year==null || !markBreakdown == null) {
-            return res.status(400).json({error : "year or Question not found"});
+        if(!topic==null || !markBreakdown == null) {
+            return res.status(400).json({error : "topic or Question not found"});
         }
         const subject_Name = subject.Subject_name;
         const filePath = req.file.path;
@@ -32,7 +32,7 @@ export const savePDF = async ( req , res ) => {
         const newQuestionPaper = new QuestionPaper({
             Subject_ID : subject._id,
             QuestionPaper_ID : fileName,
-            year : year,
+            topic : topic,
             markBreakdown : markBreakdown,
             googleID : driveResponse.id,
             preViewLink : driveResponse.webViewLink,
@@ -104,7 +104,7 @@ export const get_questionPaper = async (req , res) => {
     try {
         const { Subject_code } = req.body;
 
-        const subject = await Subject.findOne({Subject_code}).populate("QuestionPaper" , "year preViewLink downloadLink QuestionPaper_ID -_id");
+        const subject = await Subject.findOne({Subject_code}).populate("QuestionPaper" , "topic preViewLink downloadLink QuestionPaper_ID -_id");
 
         if (!subject) {
             return res.status(404).json({ error : 'Subject not found' });
