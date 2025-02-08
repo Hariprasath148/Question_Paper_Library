@@ -10,7 +10,8 @@ const SubjectSchema=mongoose.Schema({
         required:true
     },
     QuestionPaper:[{
-        type:mongoose.Schema.Types.ObjectId,ref:'QuestionPaper'
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'QuestionPaper'
     }]
 });
 

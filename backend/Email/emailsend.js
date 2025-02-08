@@ -85,7 +85,6 @@ export const removeEmail = async ( email , staffname) => {
   }
 };
 
-
 export const forgotPasswordEmail = async ( email  , resetUrl ) => {
   try {
     const mailOptions = {

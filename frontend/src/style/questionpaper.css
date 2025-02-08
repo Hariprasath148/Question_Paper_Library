@@ -7,3 +7,11 @@
     background-color: var(--base5);
     color: white;
 }
+
+.question-list {
+    background-color: var(--92);
+}
+
+.input-group-text {
+    border: 1px solid var(--base4) !important;
+}

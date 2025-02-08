@@ -31,7 +31,7 @@
     --staff-font : "Inter", serif ;
     /* main shadows */
     --main-shadow : 0 0 10px hsla(200, 7%, 72%, 1);
- }
+}
 
 #Staff-layout.dark {
     background-color: black !important;

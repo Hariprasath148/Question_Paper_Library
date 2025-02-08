@@ -5,7 +5,7 @@ import { add_subject, get_subject } from '../controllers/questionpaper.controlle
 const router = express.Router();
 
 
-router.post("/save-question-paper",upload.single("file"),savePDF);
+router.post("/save-question-paper",upload.array("file"),savePDF);
 router.post("/add-subject",add_subject)
 router.get("/get-subject",get_subject)
 router.get("/get-questionPaper",get_questionPaper)
