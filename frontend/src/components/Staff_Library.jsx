@@ -2,7 +2,7 @@ import baseURL from "../constant/constant";
 
 // Fetch subjects from backend
 export const fetchSubjects = async () => {
-  const response = await fetch(`${baseURL}/api/questionpaper/get-subject`); // Corrected URL
+  const response = await fetch(`${baseURL}/api/questionpaper/get-subject`); 
 
   if (!response.ok) {
     throw new Error("Failed to fetch subjects");
@@ -28,12 +28,11 @@ export const addSubject = async (subject) => {
   return response.json();
 };
 
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../style/staffLibrary.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 export const Staff_Library = () => {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,7 +51,7 @@ export const Staff_Library = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["subjects"]); // Refresh subjects after adding
       setNewSubject("");
-      setSubjectCode(""); // Reset subject code
+      setSubjectCode(""); 
       setIsModalOpen(false);
     },
   });
@@ -63,6 +62,12 @@ export const Staff_Library = () => {
       mutation.mutate({ Subject_name: newSubject, Subject_code: subjectCode }); // Pass both subject name and code
     }
   };
+
+  useEffect(() => {
+    if (subjects.length > 0 && activeSubject === null) {
+      setActiveSubject(subjects[0]._id); 
+    }
+  }, [subjects]);
 
   return (
     <>
@@ -92,13 +97,8 @@ export const Staff_Library = () => {
            {subject.Subject_name}
           </button>
           ))}
-        </div>
-
-        {/* Add Subject Button */}
-        <div className="d-flex justify-content-center">
           <button className="cus_but" onClick={() => setIsModalOpen(true)}>+ Add Subject</button>
         </div>
-
         {/* Modal to Add a Subject */}
         {isModalOpen && (
           <div className="modal">
@@ -129,6 +129,8 @@ export const Staff_Library = () => {
             </div>
           </div>
         )}
+        {/* Question paper view */}
+        <div></div>
       </div>
     </>
   );
