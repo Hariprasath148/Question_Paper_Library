@@ -1,22 +1,35 @@
 import mongoose from "mongoose";
 
 const questionPaperSchema = new mongoose.Schema({
-    year : {
+    Subject_ID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject", // Reference to Subject collection
+        required: true,
+    },
+    QuestionPaper_ID : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    topic : {
         type : String,
         required : true,
     },
     markBreakdown : {
-        "3_mark" : {
+        "mark_3" : {
             type : [String],
         },
-        "6_mark" : {
+        "mark_6" : {
             type : [String],
         },
-        "10_mark" : {
+        "mark_10" : {
             type : [String],
         },
     },
-    previewLink : {
+    googleID : {
+        type : String,
+    },
+    preViewLink : {
         type : String,
     },
     downloadLink : {

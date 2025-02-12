@@ -8,13 +8,14 @@ const SubjectSchema=mongoose.Schema({
     },
     Subject_code:{
         type:String,
-        reequired:true,
+        required:true,
         unique:true
     },
     QuestionPaper:[{
-        type:mongoose.Schema.Types.ObjectId,ref:'QuestionPaper'
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'QuestionPaper'
     }]
 });
 
 const Subject=mongoose.model("subject",SubjectSchema)
-export default Subject 
+export default Subject ;

@@ -7,6 +7,7 @@
     --base2 : #FF6500;
     --base3 : #FF8A08;
     --base4 : #FFC100;
+    --base5 : #2B3894;
     /* box-shadow color */
     --base1-shadow : rgb(196, 12, 12 , .25);
     --base2-shadow : rgb(255, 101, 0 , .25);
@@ -30,7 +31,7 @@
     --staff-font : "Inter", serif ;
     /* main shadows */
     --main-shadow : 0 0 10px hsla(200, 7%, 72%, 1);
- }
+}
 
 #Staff-layout.dark {
     background-color: black !important;

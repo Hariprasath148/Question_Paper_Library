@@ -3,7 +3,7 @@ import fs from "fs";
 
 const apikey = JSON.parse(process.env.GOOGLE_API_SECRET_KEY);
 
-const authenicateGoogle = () => {
+const authenticateGoogle = () => {
     const auth = new google.auth.GoogleAuth({
         credentials : apikey,
         scopes: ["https://www.googleapis.com/auth/drive.file"],
@@ -11,8 +11,8 @@ const authenicateGoogle = () => {
     return auth;
 };
 
-const uploadToGoogleDrive = async ( filePath , fileName , fileMimeType) => {
-    const auth = authenicateGoogle();
+export const uploadToGoogleDrive = async ( filePath , fileName , fileMimeType) => {
+    const auth = authenticateGoogle();
     const drive = google.drive({ version : "v3" , auth });
 
     const fileMetadata = {
@@ -32,16 +32,25 @@ const uploadToGoogleDrive = async ( filePath , fileName , fileMimeType) => {
     });
 
     const fileId = response.data.id;
-    // Make the file publicly accessible by setting the permissions
+    
     await drive.permissions.create({
       fileId: fileId,
       requestBody: {
-        role: "reader",  // The file will be publicly readable
-        type: "anyone",  // "anyone" means anyone with the link can access
+        role: "reader",  
+        type: "anyone", 
       },
     });
 
     return response.data;
 }
 
-export default uploadToGoogleDrive;
+export const deleteFromGoogleDrive = async (googleDriveID) => {
+    const auth = authenticateGoogle();
+        const drive = google.drive({ version: "v3", auth });
+
+        await drive.files.delete({
+            fileId: googleDriveID,
+        });
+
+        return { success: true };
+}
