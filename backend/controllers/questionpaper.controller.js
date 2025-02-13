@@ -3,6 +3,7 @@ import Subject from "../models/subject.model.js"
 import QuestionPaper from "../models/questionpaper.model.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import { console } from "inspector";
 
 const generateUniqueQuestionID = (subjectName) => {
     const uniqueId = uuidv4();
@@ -11,8 +12,13 @@ const generateUniqueQuestionID = (subjectName) => {
 
 export const savePDF = async ( req , res ) => {
     try {
-        const { topic ,  markBreakdown , Subject_code } = req.body;
-     
+        const { topic , Subject_code } = req.body;
+        const markBreakdown = {
+            mark_3 : JSON.parse(req.body.mark_3),
+            mark_6 : JSON.parse(req.body.mark_6) ,
+            mark_10 : JSON.parse(req.body.mark_10)
+        }
+       
         const subject = await Subject.findOne({Subject_code});
 
         if(!subject) {
@@ -50,7 +56,6 @@ export const savePDF = async ( req , res ) => {
                     return res.status(500).json({ error : 'File processing completed, but deletion failed' });
                 }
             });
-
             res.status(201).json({
                 message: "Question Paper added and linked to Subject successfully",
                 questionPaper: newQuestionPaper,
@@ -128,7 +133,6 @@ export const generate_questionPaper = async (req , res ) => {
 export const delete_questionPaper = async (req, res) => {
     try {
         const { QuestionPaper_ID } = req.body;
-
         const question_paper = await QuestionPaper.findOne({ QuestionPaper_ID });
 
         if (!question_paper) {
@@ -159,3 +163,28 @@ export const delete_questionPaper = async (req, res) => {
         return res.status(500).json({ error: "Internal Server error" });
     }
 };
+
+export const get_question = async(req,res)=>{
+    try {
+        const { Subject_code } = req.body;
+        const subject = await Subject.findOne({Subject_code}).populate("QuestionPaper" , "markBreakdown -_id");
+        if (!subject) {
+            return res.status(404).json({ message: "Subject not found" });
+        }
+        const mark_3 = [];
+        const mark_6 = [];
+        const mark_10 = [];
+
+        subject.QuestionPaper.forEach(qp => {
+            if(qp.markBreakdown?.mark_3) mark_3.push(...qp.markBreakdown.mark_3);
+            if(qp.markBreakdown?.mark_6) mark_6.push(...qp.markBreakdown.mark_6);
+            if(qp.markBreakdown?.mark_10) mark_10.push(...qp.markBreakdown.mark_10);
+        });
+
+        res.status(200).json({mark_3 : mark_3 , mark_6 : mark_6 , mark_10 : mark_10});
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server error" });
+    }
+}
