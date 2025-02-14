@@ -43,8 +43,6 @@ export const New_Question_paper = () => {
     };
   },[]);
 
-  
-
   const onFileChange = (event) => {
     const file = event.target.files?.[0];
     if (file) {

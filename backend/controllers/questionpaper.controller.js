@@ -92,7 +92,7 @@ export const add_subject = async (req, res) => {
 
 export const get_subject = async (req, res) => {
     try {
-        const subjects = await Subject.find({}, { Subject_name: 1, _id: 1 });  // Fetch only required fields
+        const subjects = await Subject.find({}, { Subject_name: 1 , Subject_code : 1 , _id: 1 });  // Fetch only required fields
         
         // Check if no subjects were found
         if (subjects.length === 0) {
@@ -105,22 +105,24 @@ export const get_subject = async (req, res) => {
     }
 };
 
-export const get_questionPaper = async (req , res) => {
+export const get_questionPaper = async (req, res) => {
     try {
-        const { Subject_code } = req.body;
+        const { Subject_code } = req.query; 
 
-        const subject = await Subject.findOne({Subject_code}).populate("QuestionPaper" , "topic preViewLink downloadLink QuestionPaper_ID -_id");
+        const subject = await Subject.findOne({ Subject_code })
+            .populate("QuestionPaper", "topic preViewLink downloadLink QuestionPaper_ID -_id");
 
         if (!subject) {
-            return res.status(404).json({ error : 'Subject not found' });
+            return res.status(404).json({ error: 'Subject not found' });
         }
 
-        res.status(200).json({questionPaper : subject.QuestionPaper})
+        res.status(200).json({ questionPaper: subject.QuestionPaper });
 
     } catch (error) {
         res.status(500).json({ message: "Internal Server error", error });
     }
-}
+};
+
 
 export const generate_questionPaper = async (req , res ) => {
     try {
