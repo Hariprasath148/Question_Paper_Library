@@ -5,6 +5,7 @@ import {Pdf_loader} from "../components/Pdf_loader.jsx";
 import { useMutation } from '@tanstack/react-query';
 import baseURL from '../constant/constant.js';
 import { toast } from 'react-hot-toast';
+import { useLocation } from "react-router-dom";
 
 export const New_Question_paper = () => {
   const [pdfFile, setPdfFile] = useState(null);
@@ -127,7 +128,9 @@ export const New_Question_paper = () => {
       setTopic(null);
     }
   })
-
+  //get the subject code from staff library
+  const location = useLocation();
+  const { subject, subjectCode } = location.state || {};
   return (
     <>
       <div className="sticky-top question-paper-title text-center pt-2 pb-2 fs-5">Add New Question Paper</div>

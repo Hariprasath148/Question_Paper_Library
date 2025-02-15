@@ -6,6 +6,8 @@ import { Trash2 } from "lucide-react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../style/staffLibrary.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Site from "../assets/images/home/Site.png"
+import { useNavigate } from "react-router-dom";
 
 // Fetch subjects from backend
 export const fetchSubjects = async () => {
@@ -13,7 +15,16 @@ export const fetchSubjects = async () => {
   if (!response.ok) throw new Error("Failed to fetch subjects");
   return response.json();
 };
-
+// Add a new subject
+const addSubject = async (subject) => {
+  const response = await fetch(`${baseURL}/api/questionpaper/add-subject`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(subject),
+  });
+  if (!response.ok) throw new Error("Failed to add subject");
+  return response.json();
+};
 // Fetch question papers based on subject code
 export const fetchQuestionPapers = async (subjectCode) => {
   const response = await fetch(`${baseURL}/api/questionpaper/get-questionPaper?Subject_code=${subjectCode}`);
@@ -40,6 +51,7 @@ export const Staff_Library = () => {
   const [newSubject, setNewSubject] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
   const [activeSubject, setActiveSubject] = useState(null);
+  const [newactiveSubject,setnewActiveSubject]=useState(null);
   const [activeSubjectCode, setActiveSubjectCode] = useState("");
 
   // Fetch subjects
@@ -69,11 +81,40 @@ export const Staff_Library = () => {
 
   useEffect(() => {
     if (subjects.length > 0 && activeSubject === null) {
-      setActiveSubject(subjects[0]._id);
+      setnewActiveSubject(subjects[0]._id);
       setActiveSubjectCode(subjects[0].Subject_code);
+      setActiveSubject(subjects[0]);
     }
   }, [subjects]);
 
+    // Mutation to add a new subject
+    const mutation = useMutation({
+      mutationFn: addSubject,
+      onSuccess: () => {
+        queryClient.invalidateQueries(["subjects"]);
+        setNewSubject("");
+        setSubjectCode("");
+        setIsModalOpen(false);
+      },
+    });
+      // Add new subject
+    const handleAddSubject = () => {
+      if (newSubject.trim() && subjectCode.trim()) {
+      mutation.mutate({ Subject_name: newSubject, Subject_code: subjectCode });
+      }
+    };
+    // Store the full subject object
+    const handleSubjectClick = (subject) => {
+      setActiveSubject(subject); 
+      setnewActiveSubject(subject._id);
+      setActiveSubjectCode(subject.Subject_code);
+    };
+    //navigate to next page
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+      navigate("/staff/add-new-question-paper", { state: { subject: activeSubject.Subject_name , subjectCode: activeSubject.Subject_code } });
+    };
   return (
     <>
       <div className="container-xxl rounded-4 overflow-hidden p-3 staff-container mt-5" id="staff-card">
@@ -95,10 +136,9 @@ export const Staff_Library = () => {
           {subjects.map((subject, index) => (
             <button
               key={subject._id || index}
-              className={`Custom_Button my-2 ${activeSubject === subject._id ? "active" : ""}`}
+              className={`Custom_Button my-2 ${newactiveSubject === subject._id ? "active" : ""}`}
               onClick={() => {
-                setActiveSubject(subject._id);
-                setActiveSubjectCode(subject.Subject_code);
+                handleSubjectClick(subject)
               }}
             >
               {subject.Subject_name}
@@ -106,12 +146,44 @@ export const Staff_Library = () => {
           ))}
           <button className="cus_but" onClick={() => setIsModalOpen(true)}>+ Add Subject</button>
         </div>
+         {/* Modal to Add a Subject */}
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Add a New Subject</h2>
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="Enter Subject Name"
+              value={newSubject}
+              onChange={(e) => setNewSubject(e.target.value)}
+            />
+            <input
+              type="text"
+              className="form-control mb-2"
+              placeholder="Enter Subject Code"
+              value={subjectCode}
+              onChange={(e) => setSubjectCode(e.target.value)}
+            />
+            <div className="modal-buttons">
+              <button onClick={() => setIsModalOpen(false)} className="cancel-button">Cancel</button>
+              <button onClick={handleAddSubject} className="submit-button" disabled={mutation.isLoading}>
+                {mutation.isLoading ? "Adding..." : "Add"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-        <div className="mt-2 ms-4 d-flex gap-4 flex-wrap row">
+        <div className="mt-2 ms-2 me-2 d-flex gap-4 flex-wrap row">
           {isLoadingPapers && <p>Loading question papers...</p>}
           {questionPapers?.questionPaper?.length === 0 && 
-            <div>
-              <p>There is no question paper available</p>
+            <div className="d-flex flex-column align-items-center justify-contend-center">
+              <img src={Site} alt="" style={{width:"400px",height:"200px"}}/>
+              <h5>There is no Question paper available</h5>
+              <button className="bt3 mt-4" onClick={handleNavigate}>
+                + Add New Question Paper
+              </button>
             </div>
           }
           {questionPapers?.questionPaper?.map((paper, index) => (
@@ -132,6 +204,13 @@ export const Staff_Library = () => {
               </div>
             </div>
           ))}
+          {questionPapers?.questionPaper?.length !== 0 && 
+            <div className="qn_card p-4 border-primary" style={{ maxWidth: "300px",height:"180px"}} onClick={handleNavigate}>
+              <div className="add1"></div>
+              <div className="add2"></div>
+            </div>
+          }
+          
         </div>
       </div>
     </>
