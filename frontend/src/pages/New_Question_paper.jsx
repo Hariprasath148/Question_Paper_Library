@@ -14,6 +14,8 @@ export const New_Question_paper = () => {
   const [sixMarkQuestions , setSixMarkQuestions] = useState([]);
   const [tenMarkQuestions , setTenMarkQuestions] = useState([]);
   const [newQuestion, setNewQuestion] = useState("");
+  const location = useLocation();
+  const { subject, subjectCode } = location.state || {};
   useEffect(()=>{
     function handleMouseUp (event) {
       const customContextMenu = document.getElementById('customContextMenu');
@@ -97,7 +99,7 @@ export const New_Question_paper = () => {
     const formData = new FormData();
     formData.append("topic",topic);
     formData.append("file",pdfFile);
-    formData.append("Subject_code","R12");
+    formData.append("Subject_code",subjectCode);
     formData.append("mark_3",JSON.stringify(threeMarkQuestions))
     formData.append("mark_6",JSON.stringify(sixMarkQuestions))
     formData.append("mark_10",JSON.stringify(tenMarkQuestions))
@@ -127,10 +129,7 @@ export const New_Question_paper = () => {
       setPdfFile(null);
       setTopic(null);
     }
-  })
-  //get the subject code from staff library
-  const location = useLocation();
-  const { subject, subjectCode } = location.state || {};
+  });
   return (
     <>
       <div className="sticky-top question-paper-title text-center pt-2 pb-2 fs-5">Add New Question Paper</div>
@@ -140,6 +139,10 @@ export const New_Question_paper = () => {
         </div>
         <div  className="col-6 p-4">
           <form onSubmit={handleSaveQuestionPaper} id="addNewQuestionPaperFrom">
+            <div className="mb-3 row">
+              <div className="col-md-6 col-12"><p><span className="h5 subject-info">Subject Name : </span><span className="h5 fw-normal">{subject}</span></p></div>
+              <div className="col-md-6 col-12"><p><span className="h5 subject-info">Subject Code : </span><span className="h5 fw-normal">{subjectCode}</span></p></div>
+            </div>
             <div className="mb-3">
               <label htmlFor="questionpaper-topic" className='form-label'>Enter The title for the question Paper</label>
               <input type="text" className="form-control" id="questionpaper-topic" aria-describedby="questionpaper-topic-help" onChange={(e)=>{setTopic(e.target.value)}}/>
