@@ -107,7 +107,7 @@ export const Generate_New_Question_Paper = () => {
         }
     });
 
-    const { mutate : get_questions , isLoading : isGetQuestionLoading , isError : isGetQuestionError , error : getQuestionError  } = useMutation({
+    const { mutate : get_questions , isPending : isGetQuestionPending , isError : isGetQuestionError , error : getQuestionError  } = useMutation({
         mutationFn : async(Subject_code)=>{
             try {
                 const res = await fetch(`${baseURL}/api/questionpaper/get-questions?Subject_code=${Subject_code}`);
@@ -131,7 +131,7 @@ export const Generate_New_Question_Paper = () => {
         }
     });
 
-    const { mutate : post_question_paper , isLoading : isPostPuestionPaperLoading , isError : isPostPuestionPaperError , error : PostPuestionPaperError } = useMutation({
+    const { mutate : post_question_paper , isPending : isPostPuestionPaperPending , isError : isPostPuestionPaperError , error : PostPuestionPaperError } = useMutation({
         mutationFn : async(final_pdf_format)=> {
             try {
                 const res = await fetch(`${baseURL}/api/questionpaper/generate-question-paper`,{
@@ -270,7 +270,7 @@ export const Generate_New_Question_Paper = () => {
                 <form onSubmit={handel_form}>
                     <div className="mb-2">
                         <label htmlFor="subjects-select mb-2" className="form-label">Selete the Subject</label>
-                        <select className="form-select mb-2" name="subjects-select" id="subjects-select" onChange={handleSubjects_change}>
+                        <select className="form-select mb-2 form-control" name="subjects-select" id="subjects-select" onChange={handleSubjects_change}>
                             { isLoadingSubject ? (
                                 <option>Loading</option>
                             ) : (
@@ -308,24 +308,24 @@ export const Generate_New_Question_Paper = () => {
                         </div>
                         <div className="form-text " id="questionPaperFormat_dis">Select the format of the Question Paper</div>
                     </div>
-                    <button type="submit" disabled={questionStatus} className="btn w-100 py-2 rounded bg-primary text-light">Get Questions</button>
+                    <button type="submit" disabled={questionStatus} className="generate-question-paper-btn btn w-100 py-2 rounded bg-primary text-light">{isGetQuestionPending ? "Colleting Questions ..." : "Get Questions"}</button>
                 </form>
             </div>
             { questionSectionDisplay && 
                 <>
-                    <div className="container row mt-4">
-                    <div className='h4 text-center col-12 mb-4'>Question Found</div>
-                        <div className="col-4 d-flex justify-content-center align-items-center gap-3">
+                    <div className="row mt-4 py-3" id="question-count-container">
+                    <div className='h3 text-center col-12 mb-4'>Question Found</div>
+                        <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
                             <h4 className="fw-bold m-0">Three Mark </h4>
-                            <h4 className="fw-light m-0">{fetchedQuestion.mark_3.length}</h4>
+                            <h4 className="fw-bold m-0  p-2">{fetchedQuestion.mark_3.length}</h4>
                         </div>
-                    <div className="col-4 d-flex justify-content-center align-items-center gap-3">
+                    <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
                         <h4 className="m-0">Six Mark </h4>
-                        <h4 className="fw-light m-0">{fetchedQuestion.mark_6.length}</h4>
+                        <h4 className="fw-bold m-0 p-2">{fetchedQuestion.mark_6.length}</h4>
                     </div>
-                    <div className="col-4 d-flex justify-content-center align-items-center gap-3">
+                    <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
                         <h4 className="m-0">Ten Mark </h4>
-                        <h4 className="fw-light m-0">{fetchedQuestion.mark_10.length}</h4>
+                        <h4 className="fw-bold m-0 p-2">{fetchedQuestion.mark_10.length}</h4>
                     </div>
                     </div>
                     <div className="container-fluid">
@@ -334,7 +334,7 @@ export const Generate_New_Question_Paper = () => {
                         SelectedQuestion.mark_3.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 3)}/>
-                            <span className="input-group-text p-0"><button className="btn" type="button" onClick={()=>{refreshQuestion(3,index)}}><RefreshCw /></button></span>
+                            <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(3,index)}}><RefreshCw /></button></span>
                           </div>
                         ))
                         }
@@ -343,7 +343,7 @@ export const Generate_New_Question_Paper = () => {
                         SelectedQuestion.mark_6.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 6)}/>
-                            <span className="input-group-text p-0"><button className="btn" type="button" onClick={()=>{refreshQuestion(6,index)}}><RefreshCw /></button></span>
+                            <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(6,index)}}><RefreshCw /></button></span>
                           </div>
                         ))
                         }  
@@ -352,7 +352,7 @@ export const Generate_New_Question_Paper = () => {
                         SelectedQuestion.mark_10.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 10)}/>
-                            <span className="input-group-text p-0"><button className="btn" type="button" onClick={()=>{refreshQuestion(10,index)}}><RefreshCw /></button></span>
+                            <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(10,index)}}><RefreshCw /></button></span>
                           </div>
                         ))
                         }       
@@ -406,7 +406,7 @@ export const Generate_New_Question_Paper = () => {
                         </div>
                     </div>
                     <div className="mb-5">
-                        <button className="w-100 py-2 bg-primary border-0 text-light" onClick={generate_questionPaper}>Generate Question Paper</button>
+                        <button disabled={isPostPuestionPaperPending} className="generate-question-paper-btn w-100 py-2 bg-primary border-0 text-light rounded-2" onClick={generate_questionPaper}>{isPostPuestionPaperPending ? "Generating QuestionPaper ...." : "Generate Question Paper"}</button>
                     </div>
                 </>
             }

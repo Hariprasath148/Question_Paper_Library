@@ -14,3 +14,16 @@
     margin-bottom: 2px !important;
     text-align: end;
 }
+
+#question-count-container {
+    background-color: var(--base4);
+} 
+
+.refresh-btn {
+    color: var(--62);
+}
+
+.generate-question-paper-btn {
+    color: white !important;
+    background-color: var(--base2) !important;
+}
