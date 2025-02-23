@@ -11,6 +11,7 @@ import "./style/root.css"
 import { Staff_Root_Layout } from './layout/Staff_Root_Layout.jsx';
 import { New_Question_paper } from './pages/New_Question_paper.jsx';
 import { Error_Page } from './pages/Error_Page.jsx';
+import { Generate_New_Question_Paper } from './pages/Generate_New_Question_Paper.jsx';
 
 export const App = () => {
 
@@ -54,6 +55,7 @@ export const App = () => {
             <Route path="staff" element={authStaff ? <Staff_Root_Layout/> : <Navigate to="/login"/>}>
               <Route index element={<Staff_layout />} />
               <Route path="add-new-question-paper" element={<New_Question_paper/>} />
+              <Route path="generate-new-question-paper" element={<Generate_New_Question_Paper/>} />
             </Route>
             <Route path="login" element={!authStaff ? <Login/> : <Navigate to="/staff"/>}/>
             <Route path="library" element={<Library_Layout/>} />

@@ -5,7 +5,7 @@ import connectDB from "./database/connectDB.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import staffRoute from "./routes/staff.route.js";
-import questionPaperRoute from "./routes/questionpaper.route.js"
+import questionPaperRoute from "./routes/questionpaper.route.js";
 
 dotenv.config();
 
@@ -20,11 +20,11 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.json({ limit: "10mb" }))
 
 app.use("/api/auth", authRoute);
 app.use("/api/staff", staffRoute);
 app.use("/api/questionpaper", questionPaperRoute);
-
 
 app.listen(PORT, () => {
     console.log("Server is running on port:", PORT);

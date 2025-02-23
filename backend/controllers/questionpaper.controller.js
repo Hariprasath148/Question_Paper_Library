@@ -4,6 +4,7 @@ import QuestionPaper from "../models/questionpaper.model.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { console } from "inspector";
+import puppeteer from "puppeteer";
 
 const generateUniqueQuestionID = (subjectName) => {
     const uniqueId = uuidv4();
@@ -126,7 +127,48 @@ export const get_questionPaper = async (req, res) => {
 
 export const generate_questionPaper = async (req , res ) => {
     try {
-        
+        const {htmlContent} = req.body;
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.setContent(htmlContent);
+        await page.addStyleTag({
+            content :`
+                .header-container { 
+                    break-inside: avoid !important; 
+                    page-break-inside: avoid !important; 
+                    page-break-before: avoid !important;
+                    page-break-after: avoid !important;
+                } 
+                body{
+                    line-height:0.5;
+                } 
+                .question-header {
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                } 
+                td { 
+                    line-height : 1.5; 
+                } 
+                .marks {
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-bottom: 2px !important;
+                    text-align: end;
+                }
+        `});
+        const pdfBuffer = await page.pdf({ 
+            width: "688px",
+            height: "971px",
+            margin: { top: "12mm", right: "12mm", bottom: "12mm", left: "12mm" },
+            printBackground: true, 
+        });
+        await browser.close();
+        res.set({
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=QuestionPaper.pdf",
+        });
+        res.end(pdfBuffer);
     } catch (error) {
         res.status(500).json({ error : "Internal Server error", error });
     }
@@ -168,7 +210,7 @@ export const delete_questionPaper = async (req, res) => {
 
 export const get_question = async(req,res)=>{
     try {
-        const { Subject_code } = req.body;
+        const { Subject_code } = req.query;
         const subject = await Subject.findOne({Subject_code}).populate("QuestionPaper" , "markBreakdown -_id");
         if (!subject) {
             return res.status(404).json({ message: "Subject not found" });

@@ -1,0 +1,16 @@
+#question-paper-preview {
+    max-width: 688px !important;
+}
+
+.question-header {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    text-align: center;
+}
+.marks {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px !important;
+    text-align: end;
+}
