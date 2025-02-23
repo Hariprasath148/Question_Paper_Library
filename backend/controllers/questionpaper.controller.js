@@ -128,7 +128,9 @@ export const get_questionPaper = async (req, res) => {
 export const generate_questionPaper = async (req , res ) => {
     try {
         const {htmlContent} = req.body;
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });        
         const page = await browser.newPage();
         await page.setContent(htmlContent);
         await page.addStyleTag({
