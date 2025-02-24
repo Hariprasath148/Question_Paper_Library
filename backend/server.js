@@ -9,7 +9,7 @@ import questionPaperRoute from "./routes/questionpaper.route.js";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5500;
 const app = express();
 
 app.use(express.json());

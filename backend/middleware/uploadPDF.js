@@ -1,18 +1,7 @@
 import multer from "multer";
 import fs from "fs";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = "uploads/"; // Directory to save files
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true }); // Create directory if it doesn't exist
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname); // Keep the original file name
-  },
-});
+const storage = multer.memoryStorage();
   
 const upload = multer({
   storage : storage,

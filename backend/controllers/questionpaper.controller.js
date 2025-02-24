@@ -30,9 +30,9 @@ export const savePDF = async ( req , res ) => {
             return res.status(400).json({error : "topic or Question not found"});
         }
         const subject_Name = subject.Subject_name;
-        const filePath = req.file.path;
+        const filePath = req.file.buffer;
         const fileName =  generateUniqueQuestionID(subject_Name);
-        const fileMimeType = req.file.mimeType;
+        const fileMimeType = req.file.mimetype;
         const driveResponse = await uploadToGoogleDrive(filePath , fileName , fileMimeType);
         const downloadLink = `https://drive.google.com/uc?export=download&id=${driveResponse.id}`;
 
@@ -50,13 +50,7 @@ export const savePDF = async ( req , res ) => {
             await newQuestionPaper.save();
             subject.QuestionPaper.push(newQuestionPaper._id);
             await subject.save();
-
-            fs.unlink(req.file.path, (err) => {
-                if (err) {
-                    console.error("Error deleting file:", err);
-                    return res.status(500).json({ error : 'File processing completed, but deletion failed' });
-                }
-            });
+            
             res.status(201).json({
                 message: "Question Paper added and linked to Subject successfully",
                 questionPaper: newQuestionPaper,

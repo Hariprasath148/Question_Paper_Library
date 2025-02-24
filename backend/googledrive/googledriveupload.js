@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import fs from "fs";
+import { Readable } from "stream";
 
 const apikey = JSON.parse(process.env.GOOGLE_API_SECRET_KEY);
 
@@ -22,7 +23,7 @@ export const uploadToGoogleDrive = async ( filePath , fileName , fileMimeType) =
 
     const media = {
         mimeType : fileMimeType,
-        body : fs.createReadStream(filePath),
+        body : Readable.from(filePath),
     };
     
     const response = await drive.files.create({
