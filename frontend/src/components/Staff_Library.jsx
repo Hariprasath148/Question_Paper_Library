@@ -205,12 +205,10 @@ export const Staff_Library = () => {
             </div>
           ))}
           {questionPapers?.questionPaper?.length !== 0 && 
-            <div className="qn_card p-4 border-primary" style={{ maxWidth: "300px",height:"180px"}} onClick={handleNavigate}>
-              <div className="add1"></div>
-              <div className="add2"></div>
+            <div className="qn_card p-4 border-primary d-flex justify-content-center align-items-center" style={{ maxWidth: "300px",height:"180px"}} onClick={handleNavigate}>
+              <div className="h5 text-center">+ Add New Question Paper </div>
             </div>
           }
-          
         </div>
       </div>
     </>

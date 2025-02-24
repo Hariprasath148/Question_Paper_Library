@@ -93,7 +93,7 @@ export const add_subject = async (req, res) => {
 
 export const get_subject = async (req, res) => {
     try {
-        const subjects = await Subject.find({}, { Subject_name: 1 , Subject_code : 1 , _id: 1 });  // Fetch only required fields
+        const subjects = await Subject.find({}, { Subject_name: 1 , Subject_code : 1 });  // Fetch only required fields
         
         // Check if no subjects were found
         if (subjects.length === 0) {

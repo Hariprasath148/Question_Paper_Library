@@ -12,6 +12,7 @@ import { Staff_Root_Layout } from './layout/Staff_Root_Layout.jsx';
 import { New_Question_paper } from './pages/New_Question_paper.jsx';
 import { Error_Page } from './pages/Error_Page.jsx';
 import { Generate_New_Question_Paper } from './pages/Generate_New_Question_Paper.jsx';
+import { Student_Page } from './pages/Student_Page.jsx';
 
 export const App = () => {
 
@@ -60,6 +61,7 @@ export const App = () => {
             <Route path="login" element={!authStaff ? <Login/> : <Navigate to="/staff"/>}/>
             <Route path="library" element={<Library_Layout/>} />
             <Route path="*" element={<Error_Page/>} />
+            <Route path='Student_page' element={<Student_Page/>}/>
           </Route>
         )
     );

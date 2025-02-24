@@ -5,14 +5,15 @@
   border-radius: 5px;
   margin: 0px 15px;
   border: none;
+  background-color: var(--86)!important;
   transition: all 0.2s ease-in-out;
 }
 .Custom_Button:hover {
-  background-color: #F32121;
+  background-color: #F32121!important;
   color: white;
 }
 .Custom_Button.active {
-  background-color: #F32121;
+  background-color: #F32121!important;
   color: white;
   border: 2px solid #F32121;
 }
@@ -133,4 +134,15 @@
   right: 12px;
   cursor: pointer;
   top: 12px;
+}
+.qn_card{
+  cursor: pointer!important;
+  border: 1px solid var(--base4)!important;
+  border-radius: 12px;
+}
+.t_1{
+  max-width: 1200px;
+  min-width: 500px;
+  text-align: center;
+  margin-left: 30px;
 }
