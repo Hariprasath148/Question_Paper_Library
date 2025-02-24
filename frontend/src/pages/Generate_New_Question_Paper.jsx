@@ -405,6 +405,10 @@ export const Generate_New_Question_Paper = () => {
                             <p className='question-header'>**********</p>
                         </div>
                     </div>
+                    {
+                        isPostPuestionPaperError && <div className='mt-2 mb-3'>
+                        <p className="text-danger text-center">{PostPuestionPaperError.message}</p></div>
+                    }
                     <div className="mb-5">
                         <button disabled={isPostPuestionPaperPending} className="generate-question-paper-btn w-100 py-2 bg-primary border-0 text-light rounded-2" onClick={generate_questionPaper}>{isPostPuestionPaperPending ? "Generating QuestionPaper ...." : "Generate Question Paper"}</button>
                     </div>

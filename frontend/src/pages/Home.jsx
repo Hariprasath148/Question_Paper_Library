@@ -43,7 +43,7 @@ export const Home = () => {
                     or entirely new ones that test the same concepts differently. 
                     This approach not only strengthens your understanding but also enhances your confidence for the actual exam.               
                 </h5>
-                <NavLink to="/Student_Page" className="Library_button mt-4 mb-4">
+                <NavLink to="/student-library" className="Library_button mt-4 mb-4">
                     Get Into Library
                 </NavLink>
             </div> 

@@ -59,9 +59,8 @@ export const App = () => {
               <Route path="generate-new-question-paper" element={<Generate_New_Question_Paper/>} />
             </Route>
             <Route path="login" element={!authStaff ? <Login/> : <Navigate to="/staff"/>}/>
-            <Route path="library" element={<Library_Layout/>} />
+            <Route path="student-library" element={<Student_Page/>} />
             <Route path="*" element={<Error_Page/>} />
-            <Route path='Student_page' element={<Student_Page/>}/>
           </Route>
         )
     );
