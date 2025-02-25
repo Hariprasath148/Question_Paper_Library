@@ -39,43 +39,9 @@ export const Login = () => {
     }
   });
 
-  const { mutate: sendResetEmail } = useMutation({
-    mutationFn: async (email) => {
-      const res = await fetch(`${baseURL}/api/auth/forgot-password`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
-    },
-    onSuccess: () => {
-      toast.success('Password reset email sent!');
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    }
-  });
-
   function handleLogin(event) {
     event.preventDefault();
     login(formData);
-  }
-
-  function handleForgotPassword() {
-    if (!formData.email) {
-      toast.error('Please enter your email first');
-      return;
-    }
-
-    // Debugging line to check if function is getting called
-    console.log("Sending password reset email for:", formData.email);
-
-    sendResetEmail(formData.email);
   }
 
   const handleInputChange = (e) => {
@@ -105,15 +71,6 @@ export const Login = () => {
               <button type='submit' id='login-btn' className='btn text-center px-3'>{isPending ? "Loading" : "Login"}</button>
             </div>
           </form>
-          {/* Forgot Password Link */}
-          <div className='mt-3'>
-            <span
-              className='text-primary cursor-pointer'
-              onClick={handleForgotPassword}
-              style={{ textDecoration: 'underline' }}>
-              Forgot password?
-            </span>
-          </div>
         </div>
         <div className='login-banner vh-100 col-9 col-sm-7 col-lg-9 p-0'>
           <img className='w-100 h-100' src={gnc_banner} alt="" />

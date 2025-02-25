@@ -26,6 +26,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/staff", staffRoute);
 app.use("/api/questionpaper", questionPaperRoute);
 
+app.use("/",(req,res)=>{
+    res.send("this is the home route");
+})
+
 app.listen(PORT, () => {
     console.log("Server is running on port:", PORT);
     connectDB();

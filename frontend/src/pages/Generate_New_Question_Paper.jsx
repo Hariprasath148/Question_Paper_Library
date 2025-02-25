@@ -5,6 +5,7 @@ import banner from "../assets/images/qp_generator/qp_banner.png"
 import { useMutation, useQuery } from '@tanstack/react-query';
 import baseURL from '../constant/constant';
 import { RefreshCw } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export const Generate_New_Question_Paper = () => {
     const sem_pattern = {
@@ -265,7 +266,7 @@ export const Generate_New_Question_Paper = () => {
               document.getElementById(inputId).value = "";
             }
         }
-        if(markType == 6 && questionPaper_format.mark_6 > SelectedQuestion.mark_6.length) {
+        else if(markType == 6 && questionPaper_format.mark_6 > SelectedQuestion.mark_6.length) {
             let newInput = document.getElementById(inputId).value;
             if(!newInput == "") {
                 setSelectedQuestion(prevState => ({
@@ -274,7 +275,7 @@ export const Generate_New_Question_Paper = () => {
                 document.getElementById(inputId).value = "";
             }
         }
-        if(markType == 10 && questionPaper_format.mark_10 > SelectedQuestion.mark_10.length) {
+        else if(markType == 10 && questionPaper_format.mark_10 > SelectedQuestion.mark_10.length) {
             let newInput = document.getElementById(inputId).value;
             if(!newInput == "") {
                 setSelectedQuestion(prevState => ({
@@ -282,6 +283,8 @@ export const Generate_New_Question_Paper = () => {
                     mark_10 : [...prevState.mark_10 , newInput ]}));
                 document.getElementById(inputId).value = "";
             }
+        }else {
+            toast.error("Question is Full")
         }
     };
 
@@ -294,6 +297,8 @@ export const Generate_New_Question_Paper = () => {
         }
         else if(markType == 6 && fetchedQuestion.mark_6.length > 0) {
             document.getElementById(inputId).value = fetchedQuestion.mark_10[Math.floor(Math.random() * fetchedQuestion.mark_10.length)];
+        }else {
+            toast.error("No More Question");
         }
     };
 
@@ -311,7 +316,7 @@ export const Generate_New_Question_Paper = () => {
                 ...prevState,
                 mark_10 : prevState.mark_10.filter((_, i) => i !== index)}));
         }
-      };
+    };
 
     const generate_questionPaper = ()=> {
         let final_pdf_format = document.querySelector("#question-paper-preview").innerHTML
@@ -372,17 +377,17 @@ export const Generate_New_Question_Paper = () => {
             { questionSectionDisplay && 
                 <>
                     <div className="row mt-4 py-3" id="question-count-container">
-                    <div className='h3 text-center col-12 mb-4'>Question Found</div>
+                    <div className='h3 fw-bold text-center col-12 mb-4'>Question Found</div>
                         <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
-                            <h4 className="fw-bold m-0">Three Mark </h4>
+                            <h4 className="fw-bold m-0 count-head">Three Mark </h4>
                             <h4 className="fw-bold m-0  p-2">{fetchedQuestion.mark_3.length}</h4>
                         </div>
                     <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
-                        <h4 className="m-0">Six Mark </h4>
+                        <h4 className="fw-bold m-0 count-head">Six Mark </h4>
                         <h4 className="fw-bold m-0 p-2">{fetchedQuestion.mark_6.length}</h4>
                     </div>
                     <div className="col-4 d-flex justify-content-center align-items-center gap-3 flex-column">
-                        <h4 className="m-0">Ten Mark </h4>
+                        <h4 className="fw-bold m-0 count-head">Ten Mark </h4>
                         <h4 className="fw-bold m-0 p-2">{fetchedQuestion.mark_10.length}</h4>
                     </div>
                     </div>
@@ -396,7 +401,7 @@ export const Generate_New_Question_Paper = () => {
                         {
                         SelectedQuestion.mark_3.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
-                            <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 3)}/>
+                            <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 3)}/> 
                             <span className="input-group-text"><button className="btn-close" type="button" aria-label="close" onClick={() => removeQuestion(index, 3)}
                             ></button></span>
                             <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(3,index)}}><RefreshCw /></button></span>

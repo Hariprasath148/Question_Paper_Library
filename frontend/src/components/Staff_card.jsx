@@ -96,31 +96,23 @@ export const Staff_card = ({ Staff }) => {
         <div className="card-body p-3">
           <div className="card-title h3 mt-3">{Staff.staffname}</div>
           <div className="row justify-content-around mt-4 gap-2">
-            <div className="col-12 col-sm-3 info-box py-2 pxl-3 rounded-2">
+            <div className="col-12 col-sm-5 info-box py-2 pxl-3 rounded-2">
               <div className="info-title fw-light mb-1">StaffID:</div>
               <div className="info-data overflow-auto fs-6">{Staff.staffId}</div>
             </div>
-            <div className="col-12 col-sm-4 info-box py-2 pxl-3 rounded-2">
-              <div className="info-title fw-light mb-1">Email :</div>
-              <div className="info-data fs-6 overflow-auto w-100">{Staff.email}</div>
-            </div>
-            <div className="col-12 col-sm-4 info-box py-2 pxl-3 rounded-2">
+            <div className="col-12 col-sm-5 info-box py-2 pxl-3 rounded-2">
                 <div className="info-title fw-light mb-1">Role :</div>
                 <div className="info-data fs-6 overflow-auto">{Staff.role}</div>
-              </div>
+            </div>
             <div className="row collapse justify-content-around mt-3 gap-2 p-0" id="Collapse-staff-Info">
               <div className="col-12 text-center mb-3">More Information</div>
-              <div className="col-12 col-sm-3 info-box py-2 pxl-3 rounded-2">
+              <div className="col-12 col-sm-5 info-box py-2 pxl-3 rounded-2">
+                <div className="info-title fw-light mb-1">Email :</div>
+                <div className="info-data fs-6 overflow-auto w-100">{Staff.email}</div>
+              </div>
+              <div className="col-12 col-sm-5 info-box py-2 pxl-3 rounded-2">
                 <div className="info-title fw-light mb-1">Department :</div>
                 <div className="info-data overflow-auto fs-6">{Staff.department}</div>
-              </div>
-              <div className="col-12 col-sm-4 info-box py-2 pxl-3 rounded-2">
-                <div className="info-title fw-light mb-1">Password :</div>
-                <div className="info-data fs-6 overflow-auto">................</div>
-              </div>
-              <div className="col-12 col-sm-4 info-box py-2 pxl-3 rounded-2">
-                <div className="info-title fw-light mb-1">Password :</div>
-                <div className="info-data fs-6 overflow-auto">................</div>
               </div>
             </div>
             <div className="row mt-3 justify-content-center">
