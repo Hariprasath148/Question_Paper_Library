@@ -76,7 +76,10 @@ export const Staff_Library = () => {
   });
 
   const handleDelete = (id) => {
-    deleteMutation.mutate(id);
+    const isConfirmed = window.confirm("Do you want to remove this Question Paper");
+    if (isConfirmed) {
+      deleteMutation.mutate(id);
+    }
   };
 
   useEffect(() => {
@@ -119,16 +122,16 @@ export const Staff_Library = () => {
     <>
       <div className="container-xxl rounded-4 overflow-hidden p-3 staff-container mt-5" id="staff-card">
         <div className="card m-0 rounded-0 border-0">
-          <div className="card-header row m-0 p-0 justify-content-start bg-transparent border-0">
+          <div className="card-header row m-0 p-0 justify-content-between bg-transparent border-0">
             <div className="col-md-4 col-6 d-flex p-0 ps-2 align-items-center">
               <div className="vr h-100 side-line rounded opacity-100"></div>
-              <div className="card-header bg-transparent h5 border-0 fw-normal text-wrap ps-2 p-0">
-                Question Paper Library
-              </div>
+              <div id="staff-label" className="card-header bg-transparent h5 border-0 fw-normal text-wrap ps-2 p-0">Question Paper Library</div>
+            </div>
+            <div className="col-md-3 col-6 d-flex justify-content-end align-items-center gap-2 p-0">
+              <NavLink id="generate-btn" className="p-2 px-3 text-light text-decoration-none rounded" to="/staff/generate-new-question-paper">Generate</NavLink>
             </div>
           </div>
         </div>
-
         <div className="card-body p-3 mt-3">
           {isLoading && <p>Loading subjects...</p>}
           {isError && <p>Error fetching subjects.</p>}
@@ -175,7 +178,7 @@ export const Staff_Library = () => {
         </div>
       )}
 
-        <div className="mt-2 ms-2 me-2 d-flex gap-4 flex-wrap row">
+        <div className="mt-2 ms-2 me-2 d-flex gap-4 flex-wrap row justify-content-md-start justify-content-center">
           {isLoadingPapers && <p>Loading question papers...</p>}
           {questionPapers?.questionPaper?.length === 0 && 
             <div className="d-flex flex-column align-items-center justify-contend-center">
@@ -191,7 +194,7 @@ export const Staff_Library = () => {
               <div className="card-body">
                 <h5 className="card-title border-bottom pb-3 pt-3 text-wrap">{paper.topic}</h5>
                 <button style={{ border: "none", background: "none" }} onClick={() => handleDelete(paper.QuestionPaper_ID)}>
-                  <Trash2 className="Trash-icon" size={24} color="red" />
+                  <Trash2 className="Trash-icon" size={24} color="red"/>
                 </button>
                 <div className="d-flex justify-content-between mt-3">
                   <NavLink to={paper.preViewLink} target="_blank" rel="noopener noreferrer" className="bt1">
@@ -205,8 +208,9 @@ export const Staff_Library = () => {
             </div>
           ))}
           {questionPapers?.questionPaper?.length !== 0 && 
-            <div className="qn_card p-4 border-primary d-flex justify-content-center align-items-center" style={{ maxWidth: "300px",height:"180px"}} onClick={handleNavigate}>
-              <div className="h5 text-center">+ Add New Question Paper </div>
+            <div className="qn_card p-4 border-primary d-flex flex-column justify-content-center align-items-center" style={{ maxWidth: "350px",height:"180px",backgroundColor:"var(--86)"}} onClick={handleNavigate}>
+              <div className="text-center h1">+</div>
+              <div className="h5 text-center">Add New Question Paper </div>
             </div>
           }
         </div>
