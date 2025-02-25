@@ -71,18 +71,7 @@ export const Student_Page = ()=> {
                         </div>
                     </div>
             </div>
-        </header>
-        <div className="container-xxl rounded-4 overflow-hidden p-3 staff-container mt-5" id="staff-card">
-        <div className="card m-0 rounded-0 border-0">
-          <div className="card-header row m-0 p-0 justify-content-start bg-transparent border-0">
-            <div className="col-md-4 col-10 d-flex p-0 ps-2 align-items-center">
-              <div className="vr h-100 side-line rounded opacity-100"></div>
-              <div id="staff-label" className="card-header bg-transparent h5 border-0 fw-normal text-wrap ps-2 p-0">
-                Student Question Paper Library
-              </div>
-            </div>
-          </div>
-        </div>       
+        </header>    
         <div className="card-body p-3 mt-3">
           {isLoading && <p>Loading subjects...</p>}
           {isError && <p>Error fetching subjects.</p>}
@@ -99,7 +88,7 @@ export const Student_Page = ()=> {
             </button>
           ))}
         </div>
-        <div className="d-flex flex-wrap gap-4 ms-4 mt-2">
+        <div className="d-flex justify-content-center flex-wrap gap-4 justify-content-sm-start ms-4 mt-2">
   {questionPapers?.questionPaper?.map((paper, index) => (
     <div
       key={index}
@@ -133,7 +122,6 @@ export const Student_Page = ()=> {
   ))}
 </div>
 
-      </div>
-    </>
+        </>
   )
 };
