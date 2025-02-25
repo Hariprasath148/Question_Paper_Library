@@ -1,5 +1,6 @@
 import React from 'react'
 import "../style/index.css"
+import Site from "../assets/images/home/Site.png"
 import image from "../assets/images/home/gnc-logo.png"
 import baseURL from "../constant/constant";
 import  { useEffect, useState } from 'react';
@@ -88,40 +89,46 @@ export const Student_Page = ()=> {
             </button>
           ))}
         </div>
+          {isLoadingPapers && <p>Loading question papers...</p>}
+          {questionPapers?.questionPaper?.length === 0 && 
+              <div className="d-flex flex-column align-items-center justify-contend-center">
+                <img src={Site} alt="" style={{width:"400px",height:"200px"}}/>
+                <h5>There is no Question paper available</h5>
+              </div>
+          }
         <div className="d-flex justify-content-center flex-wrap gap-4 justify-content-sm-start ms-4 mt-2">
-  {questionPapers?.questionPaper?.map((paper, index) => (
-    <div
-      key={index}
-      className="cards p-4 border-primary text-center"
-      style={{ width: "330px", position: "relative" }}
-    >
-      <div className="card-body">
-        <h5 className="card-title border-bottom pb-3 pt-3 text-wrap">
-          {paper.topic}
-        </h5>
-        <div className="d-flex justify-content-between mt-3">
-          <NavLink
-            to={paper.preViewLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bt1"
-          >
-            View
-          </NavLink>
-          <NavLink
-            to={paper.downloadLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bt2"
-          >
-            Download
-          </NavLink>
+            {questionPapers?.questionPaper?.map((paper, index) => (
+              <div
+                key={index}
+                className="cards p-4 border-primary text-center"
+                style={{ width: "330px", position: "relative" }}
+              >
+                <div className="card-body">
+                  <h5 className="card-title border-bottom pb-3 pt-3 text-wrap">
+                    {paper.topic}
+                  </h5>
+                  <div className="d-flex justify-content-between mt-3">
+                    <NavLink
+                      to={paper.preViewLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bt1"
+                    >
+                      View
+                    </NavLink>
+                    <NavLink
+                      to={paper.downloadLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bt2"
+                    >
+                      Download
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
-      </div>
-    </div>
-  ))}
-</div>
-
-        </>
+      </>
   )
 };
