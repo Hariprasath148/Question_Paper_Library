@@ -202,7 +202,7 @@ export const Generate_New_Question_Paper = () => {
     }
 
     const refreshQuestion = (mark_type , targetIndex) => {
-        if(mark_type === 3) {
+        if(mark_type === 3 && fetchedQuestion.mark_3.length > 0) {
             setSelectedQuestion(prevState => ({
                 ...prevState,
                 mark_3: prevState.mark_3.map((q, index) => 
@@ -210,7 +210,7 @@ export const Generate_New_Question_Paper = () => {
                 )
             }));
         }
-        if(mark_type === 6) {
+        if(mark_type === 6 && fetchedQuestion.mark_6.length > 0) {
             setSelectedQuestion(prevState => ({
                 ...prevState,
                 mark_6: prevState.mark_6.map((q, index) => 
@@ -218,7 +218,7 @@ export const Generate_New_Question_Paper = () => {
                 )
             }));
         }
-        if(mark_type === 10) {
+        if(mark_type === 10 && fetchedQuestion.mark_10.length > 0) {
             setSelectedQuestion(prevState => ({
                 ...prevState,
                 mark_10: prevState.mark_10.map((q, index) => 
@@ -254,6 +254,64 @@ export const Generate_New_Question_Paper = () => {
             }));
         }
     }
+
+    const addquestionbyinput = (markType,inputId) => {
+        if(markType == 3 && questionPaper_format.mark_3 > SelectedQuestion.mark_3.length) {
+            let newInput = document.getElementById(inputId).value;
+            if(!newInput == "") {
+            setSelectedQuestion(prevState => ({
+                ...prevState,
+                mark_3 : [...prevState.mark_3 , newInput ]}));
+              document.getElementById(inputId).value = "";
+            }
+        }
+        if(markType == 6 && questionPaper_format.mark_6 > SelectedQuestion.mark_6.length) {
+            let newInput = document.getElementById(inputId).value;
+            if(!newInput == "") {
+                setSelectedQuestion(prevState => ({
+                    ...prevState,
+                    mark_6 : [...prevState.mark_6 , newInput ]}));
+                document.getElementById(inputId).value = "";
+            }
+        }
+        if(markType == 10 && questionPaper_format.mark_10 > SelectedQuestion.mark_10.length) {
+            let newInput = document.getElementById(inputId).value;
+            if(!newInput == "") {
+                setSelectedQuestion(prevState => ({
+                    ...prevState,
+                    mark_10 : [...prevState.mark_10 , newInput ]}));
+                document.getElementById(inputId).value = "";
+            }
+        }
+    };
+
+    const getnewquestionbyinput = (markType,inputId) => {
+        if(markType == 3 && fetchedQuestion.mark_3.length > 0) {
+            document.getElementById(inputId).value = fetchedQuestion.mark_3[Math.floor(Math.random() * fetchedQuestion.mark_3.length)];
+        }
+        else if(markType == 6 && fetchedQuestion.mark_6.length > 0) {
+            document.getElementById(inputId).value = fetchedQuestion.mark_6[Math.floor(Math.random() * fetchedQuestion.mark_6.length)];
+        }
+        else if(markType == 6 && fetchedQuestion.mark_6.length > 0) {
+            document.getElementById(inputId).value = fetchedQuestion.mark_10[Math.floor(Math.random() * fetchedQuestion.mark_10.length)];
+        }
+    };
+
+    const removeQuestion = (index, marksType) => {
+        if (marksType === 3) {
+            setSelectedQuestion(prevState => ({
+                ...prevState,
+                mark_3 : prevState.mark_3.filter((_, i) => i !== index)}));
+        } else if (marksType === 6) {
+            setSelectedQuestion(prevState => ({
+                ...prevState,
+                mark_6 : prevState.mark_6.filter((_, i) => i !== index)}));
+        } else if (marksType === 10) {
+            setSelectedQuestion(prevState => ({
+                ...prevState,
+                mark_10 : prevState.mark_10.filter((_, i) => i !== index)}));
+        }
+      };
 
     const generate_questionPaper = ()=> {
         let final_pdf_format = document.querySelector("#question-paper-preview").innerHTML
@@ -330,28 +388,49 @@ export const Generate_New_Question_Paper = () => {
                     </div>
                     <div className="container-fluid">
                         <div className='h4 col-12 mb-4 mt-5'>Selected Three Mark</div>
+                        <div className="input-group mb-2">
+                            <input type="text" id="threeNewInput" className="form-control" placeholder="Enter a question Manually"/>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{getnewquestionbyinput(3,"threeNewInput")}}>Get</button></span>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(3,"threeNewInput")}}>Add</button></span>
+                        </div>
                         {
                         SelectedQuestion.mark_3.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 3)}/>
+                            <span className="input-group-text"><button className="btn-close" type="button" aria-label="close" onClick={() => removeQuestion(index, 3)}
+                            ></button></span>
                             <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(3,index)}}><RefreshCw /></button></span>
                           </div>
                         ))
                         }
                         <div className='h4 col-12 mb-4 mt-5'>Selected Six Mark</div>
+                        <div className="input-group mb-2">
+                            <input type="text" id="sixNewInput" className="form-control" placeholder="Enter a question Manually"/>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{getnewquestionbyinput(6,"sixNewInput")}}>Get</button></span>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(6,"sixNewInput")}}>Add</button></span>
+                        </div>
                         {
                         SelectedQuestion.mark_6.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 6)}/>
+                            <span className="input-group-text"><button className="btn-close" type="button" aria-label="close" onClick={() => removeQuestion(index, 6)}
+                            ></button></span>
                             <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(6,index)}}><RefreshCw /></button></span>
                           </div>
                         ))
                         }  
                         <div className='h4 col-12 mb-4 mt-5'>Selected Ten Mark</div>
+                        <div className="input-group mb-2">
+                            <input type="text" id="tenNewInput" className="form-control" placeholder="Enter a question Manually"/>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{getnewquestionbyinput(10,"tenNewInput")}}>Get</button></span>
+                            <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(10,"tenNewInput")}}>Add</button></span>
+                        </div>
                         {
                         SelectedQuestion.mark_10.map((question , index) => (
                           <div className="input-group mb-2" key={index}>
                             <input type="text" className="form-control" value={question} onChange={(e) => updateQuestion(index, e.target.value, 10)}/>
+                            <span className="input-group-text"><button className="btn-close" type="button" aria-label="close" onClick={() => removeQuestion(index, 10)}
+                            ></button></span>
                             <span className="input-group-text p-0"><button className="btn refresh-btn" type="button" onClick={()=>{refreshQuestion(10,index)}}><RefreshCw /></button></span>
                           </div>
                         ))

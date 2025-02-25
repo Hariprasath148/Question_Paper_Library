@@ -66,6 +66,29 @@ export const New_Question_paper = () => {
       }
     }
   };
+  const addquestionbyinput = (markType,inputId) => {
+      if(markType == 3) {
+        let newInput = document.getElementById(inputId).value;
+        if(!newInput == "") {
+          setThreeMarkQuestions((prev) => [...prev , newInput]);
+          document.getElementById(inputId).value = "";
+        }
+      }
+      else if(markType == 6) {
+        let newInput = document.getElementById(inputId).value;
+        if(!newInput == "") { 
+          setSixMarkQuestions((prev) => [...prev , newInput]);
+          document.getElementById(inputId).value = "";
+        }
+      }
+      else if(markType == 10) {
+        let newInput = document.getElementById(inputId).value;
+        if(!newInput == "") {
+          setTenMarkQuestions((prev) => [...prev , newInput]);
+          document.getElementById(inputId).value = "";
+        }
+      }
+  };
 
   const removeQuestion = (index, marksType) => {
     if (marksType === "3") {
@@ -156,8 +179,8 @@ export const New_Question_paper = () => {
             <div className="mb-3">
               <label className="form-label">3 Marks</label>
               <div className="input-group mb-2">
-                  <input type="text" className="form-control" placeholder="Enter a questtion Manually"  onChange={(e)=>{ setNewQuestion(e.target.value) }}/>
-                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestion(3)}}>Add</button></span>
+                  <input type="text" id="threeNewInput" className="form-control" placeholder="Enter a questtion Manually"/>
+                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(3,"threeNewInput")}}>Add</button></span>
               </div>
               {
                 threeMarkQuestions.map((question , index) => (
@@ -173,8 +196,8 @@ export const New_Question_paper = () => {
             <div className="mb-3">
               <label className="form-label">6 Marks</label>
               <div className="input-group mb-2">
-                  <input type="text" className="form-control" placeholder="Enter a questtion Manually" onChange={(e)=>{setNewQuestion(e.target.value)}}/>
-                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestion(6)}}>Add</button></span>
+                  <input type="text" id="sixNewInput" className="form-control" placeholder="Enter a questtion Manually"/>
+                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(6,"sixNewInput")}}>Add</button></span>
               </div>
               {
                 sixMarkQuestions.map((question , index) => (
@@ -190,8 +213,8 @@ export const New_Question_paper = () => {
             <div className="mb-3">
               <label className="form-label">10 Marks</label>
               <div className="input-group mb-2">
-                  <input type="text" className="form-control" placeholder="Enter a questtion Manually" onChange={(e)=>{ setNewQuestion(e.target.value)}}/>
-                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestion(10)}}>Add</button></span>
+                  <input type="text" id="tenNewInput" className="form-control" placeholder="Enter a questtion Manually"/>
+                  <span className="input-group-text"><button className="btn-primary border-0 bg-transparent" type="button" onClick={()=>{addquestionbyinput(10,"tenNewInput")}}>Add</button></span>
               </div>
               {
                 tenMarkQuestions.map((question , index) => (
