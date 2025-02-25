@@ -5,6 +5,8 @@ import { toast } from 'react-hot-toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../style/staff_card.css"
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { House } from 'lucide-react';
+import {NavLink} from "react-router-dom";
 
 export const Staff_card = ({ Staff }) => {
 
@@ -120,6 +122,11 @@ export const Staff_card = ({ Staff }) => {
             </div>
           </div>
         </div>  
+      </div>
+      <div className="back-to-button">
+          <NavLink to="/" className="back-to-home-link">
+            <House size={32} strokeWidth={1} className="back-to-home-icon" />
+          </NavLink>
       </div>
     </>
   )

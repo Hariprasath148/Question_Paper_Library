@@ -33,7 +33,6 @@ export const App = () => {
             if(!res.ok){
               throw new Error(data.error || "Something went Wrong");
             }
-            console.log("Staff :" , data);
             return data;
           } catch (error) {
             throw error;

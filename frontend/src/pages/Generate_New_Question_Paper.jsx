@@ -295,7 +295,7 @@ export const Generate_New_Question_Paper = () => {
         else if(markType == 6 && fetchedQuestion.mark_6.length > 0) {
             document.getElementById(inputId).value = fetchedQuestion.mark_6[Math.floor(Math.random() * fetchedQuestion.mark_6.length)];
         }
-        else if(markType == 6 && fetchedQuestion.mark_6.length > 0) {
+        else if(markType == 10 && fetchedQuestion.mark_10.length > 0) {
             document.getElementById(inputId).value = fetchedQuestion.mark_10[Math.floor(Math.random() * fetchedQuestion.mark_10.length)];
         }else {
             toast.error("No More Question");

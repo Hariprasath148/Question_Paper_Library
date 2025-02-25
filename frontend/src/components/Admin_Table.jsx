@@ -37,7 +37,6 @@ export const Admin_Table = ({Staff}) => {
         if(!res.ok) {
           throw new Error(data.error || "Something went Wrong");
         }
-        console.log(data)
         return data;
       } catch (error) {
         throw error;
@@ -64,7 +63,6 @@ export const Admin_Table = ({Staff}) => {
 
           throw new Error( data.error || "Something Wne Wrong");
         }
-        console.log("deleted ")
         return data;
       } catch (error) {
         throw error;
@@ -117,7 +115,7 @@ export const Admin_Table = ({Staff}) => {
       document.querySelector("#newStaffForm").reset();
     },onError: (error) => {
       toast.error("Unable to Add the record");
-      console.error("Error deleting staff:", error);
+      console.error("Error Add staff:", error);
     },
   })
 
@@ -134,7 +132,6 @@ export const Admin_Table = ({Staff}) => {
   function handleSave(e){
     e.preventDefault();
     addNewStaff(newFormData);
-    console.log(newFormData);
   }
 
   return (

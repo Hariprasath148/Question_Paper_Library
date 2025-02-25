@@ -45,6 +45,19 @@
     color: inherit !important;
 }
 
+.back-to-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--base1);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.back-to-button .back-to-home-icon {
+    color: white;
+}
+
 @media (max-width : 320px) {
     #staff-label {
         font-size: 12px;

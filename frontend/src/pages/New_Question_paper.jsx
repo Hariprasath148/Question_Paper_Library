@@ -157,10 +157,10 @@ export const New_Question_paper = () => {
     <>
       <div className="sticky-top question-paper-title text-center pt-2 pb-2 fs-5">Add New Question Paper</div>
       <div className="row vh-100 m-0">
-        <div  className="col-6 questionpaper-container p-3 overflow-auto">
+        <div  className="col-md-6 col-12 questionpaper-container p-3 overflow-auto">
           <Pdf_loader file={pdfFile}></Pdf_loader>
         </div>
-        <div  className="col-6 p-4">
+        <div  className="col-md-6 col-12 p-4">
           <form onSubmit={handleSaveQuestionPaper} id="addNewQuestionPaperFrom">
             <div className="mb-3 row">
               <div className="col-md-6 col-12"><p><span className="h5 subject-info">Subject Name : </span><span className="h5 fw-normal">{subject}</span></p></div>
