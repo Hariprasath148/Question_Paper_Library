@@ -5,10 +5,12 @@ import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { console } from "inspector";
 import puppeteer from "puppeteer";
+import chromium from '@sparticuz/chromium';
+import puppeteerCore from 'puppeteer-core';
 
 const generateUniqueQuestionID = (subjectName) => {
     const uniqueId = uuidv4();
-    return `${subjectName}-${uniqueId}`; // Combine with subject code and question paper name
+    return `${subjectName}-${uniqueId}`; 
 };
 
 export const savePDF = async ( req , res ) => {
@@ -122,9 +124,21 @@ export const get_questionPaper = async (req, res) => {
 export const generate_questionPaper = async (req , res ) => {
     try {
         const {htmlContent} = req.body;
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });        
+        let browser = null;
+        if (process.env.NODE_ENV === 'development') {
+            browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true,
+            });
+        }
+        if (process.env.NODE_ENV === 'production') {
+            browser = await puppeteerCore.launch({
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath(),
+            headless: chromium.headless,
+            });
+        }     
         const page = await browser.newPage();
         await page.setContent(htmlContent);
         await page.addStyleTag({
