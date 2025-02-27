@@ -192,11 +192,11 @@ export const Staff_Library = () => {
           {questionPapers?.questionPaper?.map((paper, index) => (
             <div key={index} className="cards p-4 border-primary text-center" style={{ maxWidth: "350px", position: "relative" }}>
               <div className="card-body">
-                <h5 className="card-title border-bottom pb-3 pt-3 text-wrap">{paper.topic}</h5>
+                <h5 className="card-title border-bottom pb-2 pt-3 text-wrap">{paper.topic}</h5>
                 <button style={{ border: "none", background: "none" }} onClick={() => handleDelete(paper.QuestionPaper_ID)}>
-                  <Trash2 className="Trash-icon" size={24} color="red"/>
+                  <Trash2 className="Trash-icon" size={20} color="red"/>
                 </button>
-                <div className="d-flex justify-content-between mt-3">
+                <div className="d-flex justify-content-between">
                   <NavLink to={paper.preViewLink} target="_blank" rel="noopener noreferrer" className="bt1">
                     View
                   </NavLink>

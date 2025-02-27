@@ -49,6 +49,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
+    z-index: 100;
     background-color: var(--base1);
     padding: 10px;
     border-radius: 50%;
