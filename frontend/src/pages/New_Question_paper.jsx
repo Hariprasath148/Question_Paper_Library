@@ -105,11 +105,10 @@ export const New_Question_paper = () => {
       const updatedQuestions = [...threeMarkQuestions];
       updatedQuestions[index] = value;
       setThreeMarkQuestions(updatedQuestions);
-      console.log(threeMarkQuestions);
     } else if (marksType === "6") {
       const updatedQuestions = [...sixMarkQuestions];
       updatedQuestions[index] = value;
-      console.log(sixMarkQuestions);
+      setSixMarkQuestions(updatedQuestions);
     } else if (marksType === "10") {
       const updatedQuestions = [...tenMarkQuestions];
       updatedQuestions[index] = value;
@@ -126,10 +125,7 @@ export const New_Question_paper = () => {
     formData.append("mark_3",JSON.stringify(threeMarkQuestions))
     formData.append("mark_6",JSON.stringify(sixMarkQuestions))
     formData.append("mark_10",JSON.stringify(tenMarkQuestions))
-    saveQuestionPaper(formData)
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    saveQuestionPaper(formData);
   }
 
   const {mutate : saveQuestionPaper , isPending : isSaveQuestionPaperPending  , isError : isSaveQuestionError , error  : SaveQuestionPaperError} = useMutation({
