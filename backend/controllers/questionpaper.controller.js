@@ -199,6 +199,9 @@ export const generate_questionPaper = async (req , res ) => {
                     text-align: center;
                 } 
         `});
+        await page.evaluate(() => {
+            document.body.style.fontFamily = '"Times New Roman", Times, serif';
+        });        
         const pdfBuffer = await page.pdf({ 
             width: "688px",
             height: "971px",
