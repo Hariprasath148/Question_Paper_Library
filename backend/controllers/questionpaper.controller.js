@@ -146,13 +146,13 @@ export const generate_questionPaper = async (req , res ) => {
             content :`
                 body{
                     font-size: 12px;
-                    font-family: "Times New Roman", Times, serif !important;
+                    font-family: sans-serif;
                 } 
 
                 td { 
                     line-height : normal; 
                     white-space: normal;
-                    font-size: 13px !important;
+                    font-size: 12px !important;
                 } 
 
                 .question-header-table {
@@ -169,20 +169,20 @@ export const generate_questionPaper = async (req , res ) => {
                 }
 
                 .question-header-two {
-                    font-size: 14px !important;
+                    font-size: 12px !important;
                     font-weight: bold;
                     margin: 2px !important;
                 }
 
                 .question-clg {
-                    font-size: 16px !important;
+                    font-size: 14px !important;
                     font-weight: bold;
                     margin: 0 !important;
                     text-align: center;
                 }
 
                 .question-header {
-                    font-size: 14px !important;
+                    font-size: 12px !important;
                     font-weight: bold;
                     text-align: center;
                     margin: 2px !important;
@@ -194,7 +194,7 @@ export const generate_questionPaper = async (req , res ) => {
                 }
 
                 .question-header {
-                    font-size: 14px !important;
+                    font-size: 12px !important;
                     font-weight: bold;
                     text-align: center;
                 } 
