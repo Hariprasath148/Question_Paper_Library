@@ -6,11 +6,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import staffRoute from "./routes/staff.route.js";
 import questionPaperRoute from "./routes/questionpaper.route.js";
+import path from "path";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5500;
 const app = express();
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors({
@@ -26,9 +28,12 @@ app.use("/api/auth", authRoute);
 app.use("/api/staff", staffRoute);
 app.use("/api/questionpaper", questionPaperRoute);
 
-app.use("/",(req,res)=>{
-    res.send("this is the home route");
-})
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname,"/frontend/dist")));
+    app.get("*",(req,res)=>{
+        res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"))
+    })
+}
 
 app.listen(PORT, () => {
     console.log("Server is running on port:", PORT);
