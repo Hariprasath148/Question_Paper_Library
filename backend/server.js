@@ -33,6 +33,11 @@ if(process.env.NODE_ENV === "production") {
     app.get("*",(req,res)=>{
         res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"))
     })
+    // if you run the production build in the localhost change the NODE_ENV and use the below code instead of the above one
+    // app.use(express.static(path.join(__dirname,"../frontend/dist")));
+    // app.get("*",(req,res)=>{
+    //     res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"))
+    // })
 }
 
 app.listen(PORT, () => {
